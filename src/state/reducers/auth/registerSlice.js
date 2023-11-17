@@ -5,7 +5,7 @@ export const createUserRegister = createAsyncThunk(
   "user/register",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await publicPost("/auth/register", data);
+      const response = await publicPost("/auth/signup", data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response);
