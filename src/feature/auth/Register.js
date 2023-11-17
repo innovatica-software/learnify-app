@@ -149,7 +149,7 @@ const Register = () => {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
-                                    value={email} onChange={(e) => setEmail(e.target.value)} 
+                                    value={email} onChange={(e) => setEmail(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -174,7 +174,7 @@ const Register = () => {
                             className="h-12"
                             onClick={submitForm}
                         >
-                           Register
+                            Register
                         </Button>
                         <Grid container justifyContent="flex-end" className='mb-4'>
                             <Grid item>
