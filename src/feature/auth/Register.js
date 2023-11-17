@@ -79,7 +79,7 @@ const Register = () => {
         }
     }, [success, error, errMsg, navigate, dispatch, errorMessage]);
     return (
-        <div className=" w-3/4 lg:w-2/4 xl:w-1/4 mx-auto flex flex-col items-center justify-center mt-28 lg:mt-52">
+        <div className=" w-3/4 lg:w-2/4 xl:w-1/4 mx-auto flex flex-col items-center justify-center mt-28 md:mt-0  min-h-screen">
             <Container component="main" maxWidth="md" className='border rounded shadow-md'>
                 <CssBaseline />
                 <Box
