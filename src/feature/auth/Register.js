@@ -1,5 +1,15 @@
 import { Button, TextField, } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserRegister, registrationClean } from '../../state/reducers/auth/registerSlice';
@@ -11,7 +21,7 @@ const Register = () => {
         isLoading,
         success,
         error,
-        errMsg:errorMessage
+        errMsg: errorMessage
     } = useSelector(state => state.register);
     const navigate = useNavigate();
     const [name, setName] = useState('');
@@ -69,31 +79,116 @@ const Register = () => {
         }
     }, [success, error, errMsg, navigate, dispatch, errorMessage]);
     return (
-        <div className=" w-3/4 lg:w-2/4 xl:w-1/4 mx-auto flex flex-col items-center justify-center mt-12 lg:mt-52">
-            <form action="" className="space-y-6 py-6 mt-6 border rounded p-8 shadow-md" >
-                <p className="text-2xl text-center text-blue-500">Register</p>
-                <TextField id="outlined-basic" label="Name" variant="outlined" className="w-full py-3 px-6"
-                    value={name} onChange={(e) => setName(e.target.value)} />
-                <TextField id="outlined-basic" label="Phone" variant="outlined" className="w-full py-3 px-6"
-                    value={phone} onChange={(e) => setPhone(e.target.value)} />
-                <TextField id="outlined-basic" label="Address" variant="outlined" className="w-full py-3 px-6"
-                    value={address} onChange={(e) => setAddress(e.target.value)} />
+        <div className=" w-3/4 lg:w-2/4 xl:w-1/4 mx-auto flex flex-col items-center justify-center mt-28 lg:mt-52">
+            <Container component="main" maxWidth="md" className='border rounded shadow-md'>
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Register
+                    </Typography>
+                    <Box component="form" noValidate sx={{ mt: 6 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    autoComplete="given-name"
+                                    name="Name"
+                                    required
+                                    fullWidth
+                                    id="Name"
+                                    label="Name"
+                                    autoFocus
+                                    value={name} onChange={(e) => setName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="Phone"
+                                    label="Phone"
+                                    name="Phone"
+                                    autoComplete="family-name"
+                                    value={phone} onChange={(e) => setPhone(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="address"
+                                    label="Address"
+                                    name="address"
+                                    autoComplete="address"
+                                    value={address} onChange={(e) => setAddress(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <select name="Gender" className="w-full h-12 border rounded p-2" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                                    <option  >Select Language </option>
+                                    <option  >Bangla  </option>
+                                    <option >English </option>
+                                    <option >Hindhi </option>
+                                    <option >French</option>
+                                </select>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    value={email} onChange={(e) => setEmail(e.target.value)} 
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="new-password"
+                                    value={password} onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Grid>
 
-                <select name="Gender" className="w-full h-12 border rounded p-2" value={language} onChange={(e) => setLanguage(e.target.value)}>
-                    <option  >Select Language </option>
-                    <option  >Bangla  </option>
-                    <option >English </option>
-                    <option >Hindhi </option>
-                    <option >French</option>
-                </select>
-                <TextField id="outlined-basic" label="Email" variant="outlined" className="w-full py-3 px-6"
-                    value={email} onChange={(e) => setEmail(e.target.value)} />
-                <TextField id="outlined-basic" label="Password" variant="outlined" className="w-full py-3 px-6"
-                    value={password} onChange={(e) => setPassword(e.target.value)} />
-                <Button variant="contained" className=" w-full py-3 px-6 h-12" onClick={submitForm}>Register</Button>
-                <p className="text-center text-gray-900 mt-4">Already have an account ? <span className="text-blue-500"> <Link to="/login">
-                    Login</Link></span></p>
-            </form>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            className="h-12"
+                            onClick={submitForm}
+                        >
+                           Register
+                        </Button>
+                        <Grid container justifyContent="flex-end" className='mb-4'>
+                            <Grid item>
+                                <Link to="/login" variant="body2">
+                                    Already have an account? <span className="text-blue-500 ">
+                                        Login
+                                    </span>
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Box>
+
+            </Container>
         </div>
     );
 };
