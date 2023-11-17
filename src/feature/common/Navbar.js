@@ -69,6 +69,7 @@ const Navbar = () => {
                             </Link>
                         </div>
                     }
+                   
                 </div>
             </nav>
             <ul className={active ? "navbar-ul p-2 shadow bg-base-100 rounded-box w-52" : "hidden"}>
