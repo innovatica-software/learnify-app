@@ -20,17 +20,17 @@ const registerSlice = createSlice({
     register: {},
     error: false,
     success: false,
-    errorMessage: ""
+    errorMessage: "",
   },
   reducers: {
-    registrationClean: state => {
+    registrationClean: (state) => {
       state.error = false;
       state.errorMessage = "";
       state.success = false;
-    }
+    },
   },
-  extraReducers: builder => {
-    builder.addCase(createUserRegister.pending, state => {
+  extraReducers: (builder) => {
+    builder.addCase(createUserRegister.pending, (state) => {
       state.isLoading = true;
       state.error = false;
     });
@@ -39,14 +39,14 @@ const registerSlice = createSlice({
       state.error = null;
       state.register = action.payload;
       state.errorMessage = "";
-      state.success = true
+      state.success = true;
     });
     builder.addCase(createUserRegister.rejected, (state, action) => {
       state.isLoading = false;
       state.error = true;
       state.errorMessage = action.payload.data.message;
     });
-  }
+  },
 });
 export const { registrationClean } = registerSlice.actions;
 export default registerSlice.reducer;
