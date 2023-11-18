@@ -13,7 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../state/reducers/auth/authSlice";
 const pages = [
   { name: "Translate", link: "/translate" },
   { name: "Resources", link: "/resources" },
@@ -24,7 +27,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const isAuth = false;
+  const { isAuthenticated } = useSelector((state) => state.user);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -39,9 +42,12 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const dispatch = useDispatch();
   return (
-    <AppBar position="static" style={{ backgroundColor: "#00bfff" }}>
+    <AppBar
+      position="fixed"
+      style={{ backgroundColor: "#00bfff", marginBottom: "80px" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -93,7 +99,13 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to={page.link}
+                  underline="none"
+                >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -143,9 +155,9 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          {!isAuth ? (
+          {!isAuthenticated ? (
             <Link to="/login" style={{ textDecoration: "none" }}>
-              <Button color="inherit">Login</Button>
+              <LoginIcon />
             </Link>
           ) : (
             <Box sx={{ flexGrow: 0 }}>
@@ -172,7 +184,15 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      if (setting === "Logout") {
+                        dispatch(logout());
+                      }
+                    }}
+                  >
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}

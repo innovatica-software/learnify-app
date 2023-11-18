@@ -2,17 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authSlice from "./reducers/auth/authSlice";
-import registerSlice from './reducers/auth/registerSlice';
+import registerSlice from "./reducers/auth/registerSlice";
 const persistConfig = {
   key: "authentication",
   storage,
 };
 const persistedReducer = persistReducer(persistConfig, authSlice);
 const combinedReducer = {
-  
   user: persistedReducer,
   register: registerSlice,
-
 };
 const middlewares = [];
 if (process.env.NODE_ENV === "development") {

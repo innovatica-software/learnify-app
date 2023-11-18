@@ -21,27 +21,26 @@ const authSlice = createSlice({
     user: {},
     error: false,
     errorMessage: "",
-
   },
   reducers: {
     login: (state, action) => {
       state.isAuthenticated = true;
       state.user = action.payload;
     },
-    logout: state => {
+    logout: (state) => {
       state.isAuthenticated = false;
       state.isLoading = false;
       state.user = {};
       state.error = false;
       state.errorMessage = "";
     },
-    errorClean: state => {
+    errorClean: (state) => {
       state.error = false;
       state.errorMessage = "";
-    }
+    },
   },
-  extraReducers: builder => {
-    builder.addCase(createUserLogin.pending, state => {
+  extraReducers: (builder) => {
+    builder.addCase(createUserLogin.pending, (state) => {
       state.isLoading = true;
       state.error = false;
     });
@@ -50,7 +49,6 @@ const authSlice = createSlice({
       state.error = null;
       state.isAuthenticated = true;
       state.user = action.payload;
-      localStorage.setItem("token", action.payload.token);
       state.errorMessage = "";
     });
     builder.addCase(createUserLogin.rejected, (state, action) => {
@@ -58,8 +56,7 @@ const authSlice = createSlice({
       state.error = true;
       state.errorMessage = action.payload.data.message;
     });
-    
-  }
+  },
 });
 
 export const { login, logout, errorClean } = authSlice.actions;
