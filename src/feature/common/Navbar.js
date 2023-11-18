@@ -1,92 +1,187 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMenu } from 'react-icons/fi'
-import './Navbar.css'
-import { useSelector } from 'react-redux';
-import NavSidebar from './NavSidebar';
-const Navbar = () => {
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+// import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import SchoolIcon from "@mui/icons-material/School";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Link } from "react-router-dom";
+const pages = [
+  { name: "Translate", link: "/translate" },
+  { name: "Resources", link: "/resources" },
+  { name: "Discussion", link: "/discussion" },
+];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-    const navigation = [
-        { name: 'Home', to: '/home' },
-        { name: 'Translate', to: '/translate' },
-        { name: 'Resources', to: '/resources' },
-        { name: 'Discussion', to: '/discussion' },
-    ]
-    const [active, setActive] = useState(false)
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const isAuth = false;
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-    const showMenu = () => {
-        setActive(!active)
-    }
-    const [sidebaractive, setSidebarActive] = useState(false)
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-    const sidebarMenu = () => {
-        setSidebarActive(!sidebaractive)
-    }
-    const { token } = useSelector(
-        (state) => state.user
-    );
-    return (
-        <header className="absolute inset-x-0 top-0 z-50">
-            <nav className="flex items-center justify-between  p-4 lg:p-6 lg:px-8" aria-label="Global">
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-                <div className="lg:hidden">
-                    <button
-                        type="button"
-                        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                        onClick={sidebarMenu}
-                    >
-                        {/* <span className="sr-only">Open main menu</span> */}
-                        <FiMenu className="lg:hidden block h-8 w-8 cursor-pointer mr-3 "
-                        />
-                    </button>
-                    <NavSidebar sidebaractive={sidebaractive} sidebarMenu={sidebarMenu}></NavSidebar>
-                </div>
+  return (
+    <AppBar position="static" style={{ backgroundColor: "#00bfff" }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Learnify
+          </Typography>
 
-
-
-                <div className="flex lg:flex-1">
-                    <Link to="/">
-                        <p className="text-2xl">Learnify App</p>
-                    </Link>
-                </div>
-                <div className="hidden lg:flex lg:gap-x-12">
-                    {navigation.map((item) => (
-                        <Link key={item.name} to={item.to} className="text-md font-semibold leading-6 text-gray-900">
-                            {item.name}
-                        </Link>
-                    ))}
-                </div>
-                <div className="ml-4">
-                    {
-                        token ? <div className="w-8 md:w-10 rounded-full">
-                            <img src="" alt="profile" className="border p-1 rounded-full h-8 w-8" onClick={showMenu} />
-                        </div> : <div className="hidden md:flex  gap-4 ">
-                            <Link to="/login" className="text-md font-semibold leading-6 text-gray-900">
-                                login
-                            </Link>
-                            <Link to="/register" className="text-md font-semibold leading-6 text-gray-900">
-                                Register
-                            </Link>
-                        </div>
-                    }
-                   
-                </div>
-            </nav>
-            <ul className={active ? "navbar-ul p-2 shadow bg-base-100 rounded-box w-52" : "hidden"}>
-                <li className="justify-between">
-                    <Link to={"/app/settings-profile"}>
-                        Profile Settings
-
-                    </Link>
-                </li>
-
-                <hr />
-                <li>
-                    <a >Logout</a>
-                </li>
-            </ul>
-        </header>
-    );
-};
-
-export default Navbar;
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <SchoolIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Learnify
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page.name}
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontWeight: 700,
+                }}
+                component={Link}
+                to={page.link}
+                underline="none"
+              >
+                {page.name}
+              </Button>
+            ))}
+          </Box>
+          {!isAuth ? (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button color="inherit">Login</Button>
+            </Link>
+          ) : (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+}
+export default ResponsiveAppBar;
