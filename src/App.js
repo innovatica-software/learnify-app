@@ -13,6 +13,11 @@ import Resources from "./feature/Resources/Resources";
 import Translate from "./feature/Translate/Translate";
 import Layout from "./components/Layout/Layout";
 import { useSelector } from "react-redux";
+import { theme } from "./Theme/AppTheme";
+import { ThemeProvider } from "styled-components";
+import Quiz from "./feature/Quiz/Quiz";
+import { MainApp } from "./components/MainApp/MainApp";
+
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const PUBLIC_ROUTES = ["login", "forgot-password", "register"];
@@ -23,20 +28,23 @@ function App() {
     redirect("/");
   }
   return (
-    <div className="App">
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Country />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/discussion" element={<Discussion />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/translate" element={<Translate />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </div>
+    <ThemeProvider theme={theme}>
+      <MainApp className="app">
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Country />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/discussion" element={<Discussion />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/translate" element={<Translate />} />
+              <Route path="/quiz" element={<Quiz />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </MainApp>
+    </ThemeProvider>
   );
 }
 
