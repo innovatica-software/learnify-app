@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ShowConfetti from "./ShowConfetti";
 import ShowMessage from "./ShowMessage";
 import { Typography } from "@mui/material";
+import { theme } from "../../Theme/AppTheme";
 const BasicGrid = styled.div`
   display: grid;
   gap: 1rem;
@@ -201,7 +202,7 @@ const Quiz = () => {
   return (
     <Container maxWidth="md" style={{ marginTop: "20px" }}>
       <QuizBox
-        style={{ padding: "50px", backgroundColor: "#1F1047", color: "#fff" }}
+        style={{ padding: "50px", backgroundColor: "#acf5ec", color: "#fff" }}
       >
         <div>
           <>
@@ -210,7 +211,7 @@ const Quiz = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                color: "#fff",
+                color: "#000000",
               }}
             >
               <div>
@@ -225,7 +226,7 @@ const Quiz = () => {
               </div>
             </div>
             <div className="question">
-              <h2 className="question-text">
+              <h2 className="question-text" style={{ color: "#000000" }}>
                 {" "}
                 {questions[currentQuestion].title}
               </h2>
@@ -242,7 +243,7 @@ const Quiz = () => {
                     backgroundColor:
                       selectedOptions[currentQuestion] === idx
                         ? "#00BFFF"
-                        : "#7D58FF",
+                        : `${theme.buttonColor}`,
                     color:
                       selectedOptions[currentQuestion] === idx
                         ? "#fff"
