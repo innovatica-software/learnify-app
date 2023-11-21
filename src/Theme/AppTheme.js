@@ -16,4 +16,5 @@ export const theme = {
   transition: "all ease 0.25s",
   boxShadow: "0 8px 30px rgb(0 0 0 / 15%);",
   padding: "8pt calc(16pt + 0.25rem)",
+  buttonColor: "#13B8A7",
 };

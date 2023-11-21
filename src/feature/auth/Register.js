@@ -17,6 +17,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader/Loader";
+import { theme } from "../../Theme/AppTheme";
 const defaultTheme = createTheme();
 const Register = () => {
   const dispatch = useDispatch();
@@ -202,7 +203,7 @@ const Register = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: `${theme.buttonColor}` }}
                   className="h-12"
                   onClick={submitForm}
                 >

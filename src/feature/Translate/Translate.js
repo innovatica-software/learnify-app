@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Container, Grid, Button } from "@mui/material";
 import countries from "./data";
 import classes from "../../styles/Translate.module.css";
+import { theme } from "./../../Theme/AppTheme";
 
 const Translate = () => {
   useEffect(() => {
@@ -130,7 +131,7 @@ const Translate = () => {
                 id="translateBtn"
                 style={{
                   color: "white",
-                  backgroundColor: "#00BFFF",
+                  backgroundColor: `${theme.buttonColor}`,
                   width: "100%",
                 }}
               >
