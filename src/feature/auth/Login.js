@@ -17,6 +17,7 @@ import {
 } from "../../state/reducers/auth/authSlice";
 import { showErrorToast, showSuccessToast } from "../../components/Toast/Toast";
 import Loader from "../../components/Loader/Loader";
+import { theme } from "./../../Theme/AppTheme";
 
 const defaultTheme = createTheme();
 
@@ -117,7 +118,11 @@ export default function Login() {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: `${theme.buttonColor}`,
+                  }}
                 >
                   Sign In
                 </Button>

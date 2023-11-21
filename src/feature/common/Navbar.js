@@ -17,6 +17,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../state/reducers/auth/authSlice";
+import { theme } from "../../Theme/AppTheme";
 const pages = [
   { name: "Translate", link: "/translate" },
   { name: "Resources", link: "/resources" },
@@ -44,7 +45,10 @@ function ResponsiveAppBar() {
   };
   const dispatch = useDispatch();
   return (
-    <AppBar position="sticky" style={{ backgroundColor: "#00bfff" }}>
+    <AppBar
+      position="sticky"
+      style={{ backgroundColor: `${theme.buttonColor}` }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
