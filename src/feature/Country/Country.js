@@ -40,8 +40,8 @@ const Country = () => {
             <button className="bg-white h-12 w-full mt-4 border rounded font-bold flex justify-center items-center gap-2 "> <FiPlusCircle className="text-xl font-bold"/> MORE</button>
           </div>
         </div>
-        <div className='w-full'>
-          <img src="https://www.babbel.com/static/index_page/en_US/images/hero-large-en.4ea397b62160120f1e32.webp" alt="" className="h-96 w-full" />
+        <div className='w-full mt-4'>
+          <img src="https://www.babbel.com/static/index_page/en_US/images/hero-large-en.4ea397b62160120f1e32.webp" alt="" className="max-h-96 w-full" />
         </div>
       </div>
     </div>
