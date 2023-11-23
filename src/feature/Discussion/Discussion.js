@@ -31,7 +31,7 @@ const Discussion = () => {
           <div className="px-12 py-8 transition-colors duration-300 transform border cursor-pointer rounded-xl ">
             <div className="flex justify-between">
             <p className="text-start  text-gray-900 capitalize font-semibold dark:text-gray-300 group-hover:text-gray-300">Lorem ipsum dolor sit amet </p>
-            <Button variant="contained">Add</Button>
+            <Button variant="contained" style={{height:20}}>Add</Button>
             </div>
             <div className="sm:-mx-4 mt-4">
               <img className="flex-shrink-0 object-cover w-10 h-10 rounded-full sm:mx-4 ring-4 ring-gray-300" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />
