@@ -1,0 +1,18 @@
+.country-section {
+    height: 100vh;
+    /* background-color: rgba(3, 3, 99, 0.767); */
+    background-image: linear-gradient(rgb(12, 46, 68) 42.07%, rgb(83, 127, 252) 161.12%)
+}
+.country-section  h1{
+    color:#fffac2;
+ }
+ .country-card {
+     background-color: #fff;
+     border-radius: 4px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     display: flex;
+     padding: 8px;
+     justify-content: center;
+     align-items: center;
+     gap: 8px;
+ }
