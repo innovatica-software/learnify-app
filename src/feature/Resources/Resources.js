@@ -15,7 +15,7 @@ const Resources = () => {
       {
         isLoading ? <div className="flex flex-1 justify-center items-center mt-16">
           <Loader></Loader>
-        </div> : <div className="grid md:grid-cols-2 gap-4 w-3/4 md:w-2/4 mx-auto mt-12">
+        </div> : <div className="grid md:grid-cols-2 gap-4 w-3/4 lg:w-2/4 mx-auto mt-12">
           {resource.map(rcs => (
             <div key={rcs.id} className="resources-card mt-4 w-full border">
               <img src={rcs.thumbnail} alt={rcs.title} className="w-full h-48" />
