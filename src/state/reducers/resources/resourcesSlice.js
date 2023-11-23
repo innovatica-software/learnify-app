@@ -13,7 +13,7 @@ export const fetchResources = createAsyncThunk('resources/fetchResources', async
 });
 
 export const rsesourcesSlice = createSlice({
-    name: 'plan',
+    name: 'resources',
     initialState: {
         resource: [],
         isLoading: false,
