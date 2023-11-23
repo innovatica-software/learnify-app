@@ -19,7 +19,7 @@ const Resources = () => {
       ) : (
         <div
           style={{ borderRadius: "5px" }}
-          className="grid md:grid-cols-2 gap-4 w-3/4 lg:w-3/4 xl:w-2/4 mx-auto mt-12"
+          className="grid md:grid-cols-3 gap-4 w-3/4 lg:w-3/4 xl:w-3/4 mx-auto mt-2"
         >
           {resource.map((rcs) => (
             <div key={rcs.id} className="resources-card ">

@@ -3,7 +3,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authSlice from "./reducers/auth/authSlice";
 import registerSlice from "./reducers/auth/registerSlice";
-import  rsesourcesSlice  from "./reducers/resources/resourcesSlice";
+import rsesourcesSlice from "./reducers/resources/resourcesSlice";
+import discussionsSlice from "./reducers/discussion/discussionSLice";
 const persistConfig = {
   key: "authentication",
   storage,
@@ -12,7 +13,8 @@ const persistedReducer = persistReducer(persistConfig, authSlice);
 const combinedReducer = {
   user: persistedReducer,
   register: registerSlice,
-  resources:rsesourcesSlice
+  resources: rsesourcesSlice,
+  discussion: discussionsSlice
 };
 const middlewares = [];
 if (process.env.NODE_ENV === "development") {
