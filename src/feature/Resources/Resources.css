@@ -1,0 +1,19 @@
+.resources-card {
+    background-color: #0c2e44;
+}
+
+.recources-btn {
+    background-color: #0c2e44;
+    height: 60px;
+    width: 120px;
+    border: 1px solid white;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    color:white;
+    font-size: 24px;
+}
+
+.recources-btn:hover {
+    background-color: white;
+    color: #0c2e44;
+}
