@@ -1,0 +1,11 @@
+.resources-card {
+    background-color: #0c2e44;
+    margin-top: 10px;
+}
+
+.link-btn {
+    border: 1px solid white;
+    color:white;
+    font-size: 28px;
+    padding: 10px;
+}
