@@ -67,7 +67,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            Quizzy
+            Learnify
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -174,7 +174,7 @@ function ResponsiveAppBar() {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {user.profilePic ? (
-                      <Avatar alt="Remy Sharp" src={user.profilePic} />
+                      <Avatar alt="Student" src={user.profilePic} />
                     ) : (
                       <AccountCircle />
                     )}
