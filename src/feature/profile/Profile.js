@@ -9,6 +9,7 @@ import { PiAddressBookThin } from "react-icons/pi";
 import Loader from '../../components/Loader/Loader';
 import { errorClean, updateStudentProfile } from '../../state/reducers/auth/authSlice';
 import { showSuccessToast } from '../../components/Toast/Toast';
+import { AccountCircle } from '@mui/icons-material';
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -58,12 +59,17 @@ const Profile = () => {
                     </div> :
                         <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                             <div className="image-section  flex flex-1 items-center justify-center gap-2">
-                                <img
-                                    alt=""
-                                    src={user.profilePic}
-                                    // sx={{ width: 156, height: 156 }}
-                                    className="object-cover object-center w-full h-56"
-                                />
+
+                                {
+                                    user?.profilePic ? <img
+                                        alt=""
+                                        src={user.profilePic}
+                                        // sx={{ width: 156, height: 156 }}
+                                        className="object-cover object-center w-full h-56"
+                                    /> :
+                                        <AccountCircle style={{ width: 200, height: 300 }} />
+
+                                }
 
                             </div>
                             <div className="px-6 py-4">
