@@ -9,9 +9,10 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const QuizCard = ({ isLocked, title, quizId, cost, isPurchase }) => {
   const { user } = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   const handlePurchaseLevel = async () => {
     Swal.fire({
       title: "Unlock Quiz Level",
@@ -42,11 +43,7 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase }) => {
         confirmButtonText: "Yes, Attempt",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+          navigate(`/quiz/${quizId}`);
         }
       });
     } else {
