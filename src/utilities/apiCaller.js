@@ -16,7 +16,10 @@ export const publicGet = async (endpoint) => {
   const response = await axios.get(`${api}${endpoint}`, config);
   return response.data;
 };
-
+export const publicGetSingle = async (endpoint,id) => {
+  const response = await axios.get(`${api}${endpoint}`, config);
+  return response.data;
+};
 export const publicPost = async (endpoint, body) => {
   const response = await axios.post(`${api}${endpoint}`, body, config);
   return response.data;

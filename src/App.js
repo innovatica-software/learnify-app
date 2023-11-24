@@ -17,6 +17,8 @@ import { theme } from "./Theme/AppTheme";
 import { ThemeProvider } from "styled-components";
 import Quiz from "./feature/Quiz/Quiz";
 import { MainApp } from "./components/MainApp/MainApp";
+import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
+
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -37,6 +39,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/discussion" element={<Discussion />} />
+              <Route path="/discussion/:discussionId" element={<DiscussionDetails />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/translate" element={<Translate />} />
               <Route path="/quiz" element={<Quiz />} />
