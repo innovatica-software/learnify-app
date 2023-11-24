@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LoginIcon from "@mui/icons-material/Login";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../state/reducers/auth/authSlice";
 import { theme } from "../../Theme/AppTheme";
@@ -28,14 +28,14 @@ const settings = [
   { name: "Profile", link: "/profile" },
   { name: "Account", link: "/account" },
   { name: "Dashboard", link: "/dashboard" },
-  { name: "Logout", },
+  { name: "Logout" },
 ];
-
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -205,13 +205,14 @@ function ResponsiveAppBar() {
                 >
                   {settings.map((setting) => (
                     <MenuItem
-                      key={setting}
-                      component={Link}
-                      to={setting.link}
+                      key={setting.name}
+                      component="div"
                       onClick={() => {
                         handleCloseUserMenu();
-                        if (setting === "Logout") {
+                        if (setting.name === "Logout") {
                           dispatch(logout());
+                        } else {
+                          navigate(setting.link);
                         }
                       }}
                     >
