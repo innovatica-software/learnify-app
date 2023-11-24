@@ -31,7 +31,7 @@ const Country = () => {
                   <h3 className="font-bold">{country.name}</h3>
                 </div>
               ))}
-              <button onClick={loadMore} className="bg-white h-12 w-full mt-4 border rounded font-bold flex justify-center items-center gap-2 "> <FiPlusCircle className="text-xl font-bold" /> MORE</button>
+              <button onClick={loadMore} className={countries?.length>visible ? "bg-white h-12 w-full mt-4 border rounded font-bold flex justify-center items-center gap-2 ":"hidden "}> <FiPlusCircle className="text-xl font-bold" /> MORE</button>
             </div>
           }
         </div>
