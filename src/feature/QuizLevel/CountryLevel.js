@@ -1,33 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Container } from "@mui/material";
 import QuizCard from "./QuizCard";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQuizLevels } from "../../state/reducers/quiz/quizLevelSlice";
+import { CircularProgress } from "@mui/material";
+import NoQuizLevelsMessage from "./NoQuizLevelsMessage ";
 
 const CountryLevel = () => {
-  const quizes = [
-    {
-      isLocked: false,
-      title: "First Quiz",
-      quizId: "1",
-      cost: "10",
-    },
-    {
-      isLocked: true,
-      title: "SecondQuiz",
-      quizId: "2",
-      cost: "10",
-    },
-    {
-      isLocked: true,
-      title: "Third Quiz",
-      quizId: "3",
-      cost: "100",
-    },
-  ];
+  const { countryId } = useParams();
+  const dispatch = useDispatch();
+  const { isLoading, levels } = useSelector((state) => state.quizLevels);
+  const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(fetchQuizLevels({ countryId, token: user.token }));
+  }, [countryId, dispatch, user.token]);
   const isPurchase = (currentIndex) => {
     if (
       currentIndex > 0 &&
-      quizes[currentIndex].isLocked &&
-      !quizes[currentIndex - 1].isLocked
+      !levels[currentIndex].isUnlock &&
+      levels[currentIndex - 1].isUnlock
     ) {
       return true;
     }
@@ -35,19 +27,32 @@ const CountryLevel = () => {
   };
   return (
     <Container>
-      <Grid container spacing={3} justifyContent="center" alignItems="center">
-        {quizes.map((quiz, index) => (
-          <Grid item key={index} xs={12} sm={6} md={4}>
-            <QuizCard
-              isLocked={quiz.isLocked}
-              title={quiz.title}
-              quizId={quiz.quizId}
-              cost={quiz.cost}
-              isPurchase={isPurchase(index)}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {isLoading ? (
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+        >
+          <CircularProgress />
+        </Grid>
+      ) : levels.length ? (
+        <Grid container spacing={3} justifyContent="center" alignItems="center">
+          {levels.map((level, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4}>
+              <QuizCard
+                isLocked={!level.isUnlock}
+                title={level.levelName}
+                quizId={level.levelId}
+                cost={level.point}
+                isPurchase={isPurchase(index)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <NoQuizLevelsMessage />
+      )}
     </Container>
   );
 };

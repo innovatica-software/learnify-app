@@ -21,7 +21,6 @@ import CountryLevel from "./feature/QuizLevel/CountryLevel";
 import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
 import Profile from "./feature/profile/Profile";
 
-
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const PUBLIC_ROUTES = ["login", "forgot-password", "register"];
@@ -41,9 +40,14 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/discussion" element={<Discussion />} />
-              <Route path="/discussion/:discussionId" element={<DiscussionDetails />} />
+              <Route
+                path="/discussion/:discussionId"
+                element={<DiscussionDetails />}
+              />
               <Route path="/resources" element={<Resources />} />
               <Route path="/translate" element={<Translate />} />
+              <Route path="/quiz/:levelId" element={<Quiz />} />
+              <Route path="/country/:countryId" element={<CountryLevel />} />
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/country" element={<CountryLevel />} />
