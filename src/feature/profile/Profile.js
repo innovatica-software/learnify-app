@@ -9,6 +9,7 @@ import { PiAddressBookThin } from "react-icons/pi";
 import Loader from '../../components/Loader/Loader';
 import { errorClean, updateStudentProfile } from '../../state/reducers/auth/authSlice';
 import { showSuccessToast } from '../../components/Toast/Toast';
+
 const Profile = () => {
     const dispatch = useDispatch();
     const { user, isLoading, updatedStudent } = useSelector(state => state.user);
@@ -37,7 +38,7 @@ const Profile = () => {
         formData.append('name', name);
         formData.append('phone', phone);
         formData.append('address', address);
-        formData.append('shopLogo', avatar);
+        formData.append('profilePic', avatar);
         dispatch(updateStudentProfile({ token, data: formData }));
     };
     useEffect(() => {
