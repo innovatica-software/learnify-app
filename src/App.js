@@ -18,6 +18,7 @@ import { ThemeProvider } from "styled-components";
 import Quiz from "./feature/Quiz/Quiz";
 import { MainApp } from "./components/MainApp/MainApp";
 import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
+import Profile from "./feature/profile/Profile";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/translate" element={<Translate />} />
               <Route path="/quiz" element={<Quiz />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </Layout>
         </Router>

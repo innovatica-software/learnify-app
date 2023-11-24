@@ -23,7 +23,13 @@ const pages = [
   { name: "Resources", link: "/resources" },
   { name: "Discussion", link: "/discussion" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  { name: "Profile", link: "/profile" },
+  { name: "Account", link: "/account" },
+  { name: "Dashboard", link: "/dashboard" },
+];
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -199,6 +205,8 @@ function ResponsiveAppBar() {
                   {settings.map((setting) => (
                     <MenuItem
                       key={setting}
+                      component={Link}
+                      to={setting.link}
                       onClick={() => {
                         handleCloseUserMenu();
                         if (setting === "Logout") {
@@ -206,7 +214,7 @@ function ResponsiveAppBar() {
                         }
                       }}
                     >
-                      <Typography textAlign="center">{setting}</Typography>
+                      <Typography textAlign="center">{setting.name}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
