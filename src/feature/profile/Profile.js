@@ -1,25 +1,54 @@
 import { Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import './Profile.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FiSmartphone } from "react-icons/fi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaCoins } from "react-icons/fa";
 import { PiAddressBookThin } from "react-icons/pi";
 import Loader from '../../components/Loader/Loader';
+import { errorClean, updateStudentProfile } from '../../state/reducers/auth/authSlice';
+import { showSuccessToast } from '../../components/Toast/Toast';
 const Profile = () => {
-    const { user, isLoading } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const { user, isLoading, updatedStudent } = useSelector(state => state.user);
+    const { token } = useSelector(state => state.user.user);
     const [avatar, setAvatar] = useState();
     const [avatarPreview, setAvatarPreview] = useState();
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
 
+    const updateProfileDataChange = e => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setAvatarPreview(reader.result);
+                setAvatar(e.target.files[0]);
+            }
+        };
+        reader.readAsDataURL(e.target.files[0]);
 
+    };
+    // Call API to update profile settings changes
+    const handleUpdateProfile = async e => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('address', address);
+        formData.append('shopLogo', avatar);
+        dispatch(updateStudentProfile({ token, data: formData }));
+    };
+    useEffect(() => {
 
-
+        if (updatedStudent) {
+            showSuccessToast("Profile Successfully Updated");
+            dispatch(errorClean());
+        }
+    }, [updatedStudent, dispatch]);
     return (
-        <div className="mt-12 md:mt-20 w-2/4 md:w-3/4 mx-auto md:flex justify-center items-center gap-4">
+        <div className="mt-12 md:mt-20 w-2/4 md:w-3/4 2xl:w-2/4 mx-auto md:flex justify-center items-center gap-4 2xl:gap-8">
             <div className="md:w-3/4  mx-auto">
 
                 {
@@ -34,17 +63,7 @@ const Profile = () => {
                                     // sx={{ width: 156, height: 156 }}
                                     className="object-cover object-center w-full h-56"
                                 />
-                                <label>
-                                    +
-                                    <br />
-                                    <input
-                                        type="file"
-                                        name="shopLogo"
-                                        multiple
-                                        // onChange={updateProfileDataChange}
-                                        accept="image/png,image/jpeg,image/webp"
-                                    />
-                                </label>
+
                             </div>
                             <div className="px-6 py-4">
                                 <div className="flex justify-center gap-4">
@@ -61,8 +80,28 @@ const Profile = () => {
                         </div>
                 }
             </div>
-            <form className="border rounded-lg p-12 w-full mt-8 md:mt-0" >
+            <form className="border rounded-lg p-12 w-full mt-8 md:mt-0" onSubmit={handleUpdateProfile}>
                 <p className='text-2xl text-gray-700 text-start'>Update Profile</p>
+
+                <div className="image-section  flex flex-1 items-center justify-center gap-2">
+                    <img
+                        alt=""
+                        src={avatarPreview}
+                        sx={{ width: 156, height: 156 }}
+                        className="h-52 w-52 border-2 border-blue-500 rounded-full p-2"
+                    />
+                    <label>
+                        +
+                        <br />
+                        <input
+                            type="file"
+                            name="shopLogo"
+                            multiple
+                            onChange={updateProfileDataChange}
+                            accept="image/png,image/jpeg,image/webp"
+                        />
+                    </label>
+                </div>
                 <div className="mt-10">
                     <TextField
                         required
