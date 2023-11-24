@@ -17,6 +17,7 @@ import { theme } from "./Theme/AppTheme";
 import { ThemeProvider } from "styled-components";
 import Quiz from "./feature/Quiz/Quiz";
 import { MainApp } from "./components/MainApp/MainApp";
+import CountryLevel from "./feature/QuizLevel/CountryLevel";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -40,6 +41,7 @@ function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/translate" element={<Translate />} />
               <Route path="/quiz" element={<Quiz />} />
+              <Route path="/country" element={<CountryLevel />} />
             </Routes>
           </Layout>
         </Router>
