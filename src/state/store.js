@@ -5,6 +5,8 @@ import authSlice from "./reducers/auth/authSlice";
 import registerSlice from "./reducers/auth/registerSlice";
 import rsesourcesSlice from "./reducers/resources/resourcesSlice";
 import discussionsSlice from "./reducers/discussion/discussionSLice";
+import fetchCountries from "./reducers/country/countrySlice";
+import  discussionSlice  from "./reducers/discussion/discussionDetailsSlice";
 const persistConfig = {
   key: "authentication",
   storage,
@@ -13,8 +15,10 @@ const persistedReducer = persistReducer(persistConfig, authSlice);
 const combinedReducer = {
   user: persistedReducer,
   register: registerSlice,
+  countries: fetchCountries,
   resources: rsesourcesSlice,
-  discussion: discussionsSlice
+  discussions: discussionsSlice,
+  discussion:discussionSlice,
 };
 const middlewares = [];
 if (process.env.NODE_ENV === "development") {

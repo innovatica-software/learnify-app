@@ -12,7 +12,7 @@ const Discussion = () => {
   useEffect(() => {
     dispatch(fetchDiscussion());
   }, [dispatch]);
-  const { isLoading, discussion } = useSelector((state) => state.discussion);
+  const { isLoading, discussion } = useSelector((state) => state.discussions);
   const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
@@ -64,7 +64,7 @@ const Discussion = () => {
                   <span className="text-gray-900">
                     {newFormatDate(dsc.createdAt)}
                   </span>
-                  <Link>Answers</Link>
+                  <Link to={`/discussion/${dsc.discussionId}`}>Answers</Link>
                 </h1>
               </div>
             ))}
