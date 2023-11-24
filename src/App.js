@@ -19,6 +19,7 @@ import Quiz from "./feature/Quiz/Quiz";
 import { MainApp } from "./components/MainApp/MainApp";
 import CountryLevel from "./feature/QuizLevel/CountryLevel";
 import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
+import Profile from "./feature/profile/Profile";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -47,6 +48,9 @@ function App() {
               <Route path="/translate" element={<Translate />} />
               <Route path="/quiz/:levelId" element={<Quiz />} />
               <Route path="/country/:countryId" element={<CountryLevel />} />
+              <Route path="/quiz" element={<Quiz />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/country" element={<CountryLevel />} />
             </Routes>
           </Layout>
         </Router>

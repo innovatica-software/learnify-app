@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { publicPost } from "../../../utilities/apiCaller";
+import { privatePutFile, publicPost } from "../../../utilities/apiCaller";
 
 export const createUserLogin = createAsyncThunk(
   "user/login",
@@ -12,7 +12,21 @@ export const createUserLogin = createAsyncThunk(
     }
   }
 );
-
+export const updateStudentProfile = createAsyncThunk(
+  "student/updateStudentProfile",
+  async ({ token, data }, { rejectWithValue }) => {
+    try {
+      const response = await privatePutFile(
+        "/auth/student/update",
+        token,
+        data
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response);
+    }
+  }
+);
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -21,6 +35,7 @@ const authSlice = createSlice({
     user: {},
     error: false,
     errorMessage: "",
+    updatedStudent: false
   },
   reducers: {
     login: (state, action) => {
@@ -37,6 +52,7 @@ const authSlice = createSlice({
     errorClean: (state) => {
       state.error = false;
       state.errorMessage = "";
+      state.updatedStudent = false
     },
   },
   extraReducers: (builder) => {
@@ -55,6 +71,23 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = true;
       state.errorMessage = action.payload.data.message;
+    });
+    builder.addCase(updateStudentProfile.pending, state => {
+      state.isLoading = true;
+      state.error = false;
+    });
+    builder.addCase(updateStudentProfile.fulfilled, (state, action) => {
+      const { user: previousUser } = state;
+      state.isLoading = false;
+      state.error = null;
+      state.updatedStudent = true;
+      state.user = { token: previousUser.token, ...action.payload };
+      state.errorMessage = "";
+    });
+    builder.addCase(updateStudentProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = true;
+      // state.errorMessage = action.payload.data.message;
     });
   },
 });
