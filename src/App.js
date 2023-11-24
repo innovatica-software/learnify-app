@@ -17,6 +17,7 @@ import { theme } from "./Theme/AppTheme";
 import { ThemeProvider } from "styled-components";
 import Quiz from "./feature/Quiz/Quiz";
 import { MainApp } from "./components/MainApp/MainApp";
+import CountryLevel from "./feature/QuizLevel/CountryLevel";
 import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
 import Profile from "./feature/profile/Profile";
 
@@ -45,6 +46,7 @@ function App() {
               <Route path="/translate" element={<Translate />} />
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/country" element={<CountryLevel />} />
             </Routes>
           </Layout>
         </Router>
