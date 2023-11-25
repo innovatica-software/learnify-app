@@ -3,14 +3,14 @@ import {
   Card,
   CardContent,
   Typography,
-  Button,
   Container,
 } from "@mui/material";
-import LockIcon from "@mui/icons-material/Lock";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-const QuizCard = ({ isLocked, title, quizId, cost, isPurchase }) => {
+import './Quiz.css';
+import LockImg from '../../assets/lock.png'
+const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const handlePurchaseLevel = async () => {
@@ -78,25 +78,24 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase }) => {
         alignItems: "center",
         marginTop: "20px",
       }}
+
     >
-      <Card variant="outlined" style={{ width: "100%", height: "100%" }}>
-        <CardContent style={{ textAlign: "center" }}>
-          <Typography variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography color="text.secondary">Cost: {cost}</Typography>
+      <Card className='quiz-card-section'>
+        <CardContent style={{ textAlign: "center" }} onClick={handleQuizClick} >
+          {
+            isLocked ? <Typography variant="h5" component="div" style={{ marginTop: 20, marginBottom: 10 }}>
+
+            </Typography> : <Typography variant="h5" component="div" style={{ marginTop: 20, marginBottom: 10, color: 'white', fontSize: 90, fontWeight: 'bold' }}>
+              {index + 1}
+            </Typography>
+          }
           {isLocked ? (
-            <>
-              <LockIcon color="primary" fontSize="large" />
-              <Button onClick={handleQuizClick} variant="contained">
-                Unlock
-              </Button>
-            </>
-          ) : (
-            <Button onClick={handleQuizClick} variant="contained">
-              Start Quiz
-            </Button>
-          )}
+            <div className="w-2/4 mx-auto ">
+              <img src={LockImg} alt="hello" className="h-full w-full " />
+            </div>
+          ) :
+            null
+          }
         </CardContent>
       </Card>
     </Container>
