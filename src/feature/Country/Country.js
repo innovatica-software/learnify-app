@@ -38,10 +38,10 @@ const Country = () => {
                 >
                   <img
                     src={country.flag}
-                    alt={country.name}
+                    alt={country.language}
                     className="h-6 w-6 rounded-full"
                   />
-                  <h3 className="font-bold">{country.name}</h3>
+                  <h3 className="font-bold">{country.language}</h3>
                 </Link>
               ))}
               <button
