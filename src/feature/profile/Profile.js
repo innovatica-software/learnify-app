@@ -31,7 +31,6 @@ const Profile = () => {
             }
         };
         reader.readAsDataURL(e.target.files[0]);
-
     };
     // Call API to update profile settings changes
     const handleUpdateProfile = async e => {
