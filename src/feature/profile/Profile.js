@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import './Profile.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import Loader from '../../components/Loader/Loader';
 import { errorClean, updateStudentProfile } from '../../state/reducers/auth/authSlice';
 import { showSuccessToast } from '../../components/Toast/Toast';
 import { AccountCircle } from '@mui/icons-material';
+import { Modal } from 'antd';
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -30,7 +31,6 @@ const Profile = () => {
             }
         };
         reader.readAsDataURL(e.target.files[0]);
-
     };
     // Call API to update profile settings changes
     const handleUpdateProfile = async e => {
@@ -43,36 +43,53 @@ const Profile = () => {
         dispatch(updateStudentProfile({ token, data: formData }));
     };
     useEffect(() => {
-
+        if (user) {
+            setAvatarPreview(user?.profilePic);
+        }
         if (updatedStudent) {
             showSuccessToast("Profile Successfully Updated");
             dispatch(errorClean());
         }
-    }, [updatedStudent, dispatch]);
+    }, [user, updatedStudent, dispatch]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     return (
-        <div className="mt-12 md:mt-20 w-2/4 md:w-3/4 2xl:w-2/4 mx-auto md:flex justify-center items-center gap-4 2xl:gap-8">
-            <div className="md:w-3/4  mx-auto">
+        <div className="mt-12  md:mt-20 w-3/4 md:w-3/4 2xl:w-2/4 mx-auto md:flex justify-center items-center gap-4 2xl:gap-8 ">
+            <div className="md:w-3/4 flex flex-1 justify-center items-center mx-auto">
 
                 {
                     isLoading ? <div className="flex flex-1 justify-center items-center mt-16">
                         <Loader></Loader>
                     </div> :
-                        <div className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
-                            <div className="image-section  flex flex-1 items-center justify-center gap-2">
+                        <div className="w-full max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                            <div className="image-upload-section  flex flex-1 items-center justify-center gap-2 mt-8">
 
                                 {
                                     user?.profilePic ? <img
                                         alt=""
                                         src={user.profilePic}
-                                        // sx={{ width: 156, height: 156 }}
-                                        className="object-cover object-center w-full h-56"
+                                        sx={{ width: 156, height: 156 }}
+                                        className="h-52 w-52 border-2 border-teal-500 rounded-full p-2"
+
                                     /> :
                                         <AccountCircle style={{ width: 200, height: 300 }} />
 
                                 }
-
+                                <label onClick={showModal}>
+                                    Edit
+                                </label>
                             </div>
-                            <div className="px-6 py-4">
+
+                            <div className="px-6 py-4 mt-8">
                                 <div className="flex justify-center gap-4">
                                     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">{user?.name}</h1>
                                     <p className="text-start text-md text-gray-500 flex items-center gap-2 "> <span> <FaCoins className="text-orange-500"></FaCoins> </span> ({user?.coin})</p>
@@ -87,67 +104,69 @@ const Profile = () => {
                         </div>
                 }
             </div>
-            <form className="border rounded-lg p-12 w-full mt-8 md:mt-0" onSubmit={handleUpdateProfile}>
-                <p className='text-2xl text-gray-700 text-start'>Update Profile</p>
 
-                <div className="image-section  flex flex-1 items-center justify-center gap-2">
-                    <img
-                        alt=""
-                        src={avatarPreview}
-                        sx={{ width: 156, height: 156 }}
-                        className="h-52 w-52 border-2 border-blue-500 rounded-full p-2"
-                    />
-                    <label>
-                        +
-                        <br />
-                        <input
-                            type="file"
-                            name="shopLogo"
-                            multiple
-                            onChange={updateProfileDataChange}
-                            accept="image/png,image/jpeg,image/webp"
+            <Modal title="Update Profile" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <form className="border rounded-lg p-12 w-full mt-8 md:mt-0" onSubmit={handleUpdateProfile}>
+                    <div className="image-section  flex flex-1 items-center justify-center gap-2">
+                        <img
+                            alt=""
+                            src={avatarPreview}
+                            sx={{ width: 156, height: 156 }}
+                            className="h-52 w-52 border-2 border-blue-500 rounded-full p-2"
                         />
-                    </label>
-                </div>
-                <div className="mt-10">
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Name"
-                        onChange={e => setName(e.target.value)}
-                        className='w-full'
-                    />
-                </div>
-                <div className="mt-10">
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Phone"
-                        onChange={e => setPhone(e.target.value)}
-                        className='w-full'
-                    />
+                        <label>
+                            +
+                            <br />
+                            <input
+                                type="file"
+                                name="shopLogo"
+                                multiple
+                                onChange={updateProfileDataChange}
+                                accept="image/png,image/jpeg,image/webp"
+                            />
+                        </label>
+                    </div>
+                    <div className="mt-10">
+                        <TextField
 
-                </div>
-                <div className="mt-10">
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Address"
-                        onChange={e => setAddress(e.target.value)}
-                        className='w-full'
-                    />
-                </div>
-                <div className="mt-8 w-full mx-auto">
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        className='w-full h-10'
-                    >
-                        {" "}
-                        Save Changes
-                    </Button>
-                </div>
-            </form>
+                            id="outlined-required"
+                            label="Name"
+                            onChange={e => setName(e.target.value)}
+                            className='w-full'
+                        />
+                    </div>
+                    <div className="mt-10">
+                        <TextField
+
+                            id="outlined-required"
+                            label="Phone"
+                            onChange={e => setPhone(e.target.value)}
+                            className='w-full'
+                        />
+
+                    </div>
+                    <div className="mt-10">
+                        <TextField
+
+                            id="outlined-required"
+                            label="Address"
+                            onChange={e => setAddress(e.target.value)}
+                            className='w-full'
+                        />
+                    </div>
+                    <div className="mt-8 w-full mx-auto">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            className='w-full h-10'
+                        >
+                            {" "}
+                            Save Changes
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
+
         </div>
     );
 };
