@@ -46,6 +46,7 @@ const CountryLevel = () => {
                 quizId={level.levelId}
                 cost={level.point}
                 isPurchase={isPurchase(index)}
+                index={index}
               />
             </Grid>
           ))}
