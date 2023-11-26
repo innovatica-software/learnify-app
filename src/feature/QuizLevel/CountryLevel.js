@@ -45,6 +45,7 @@ const CountryLevel = () => {
                 title={level.levelName}
                 quizId={level.levelId}
                 cost={level.point}
+                countryId={countryId}
                 isPurchase={isPurchase(index)}
                 index={index}
               />
