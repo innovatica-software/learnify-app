@@ -25,13 +25,15 @@ const Profile = () => {
     const updateProfileDataChange = e => {
         const reader = new FileReader();
         reader.onload = () => {
-            if (reader.readyState === 2) {
-                setAvatarPreview(reader.result);
-                setAvatar(e.target.files[0]);
-            }
+          if (reader.readyState === 2) {
+            setAvatarPreview(reader.result);
+            setAvatar(e.target.files[0]);
+          }
         };
         reader.readAsDataURL(e.target.files[0]);
-    };
+      };
+
+    
     // Call API to update profile settings changes
     const handleUpdateProfile = async e => {
         e.preventDefault();
