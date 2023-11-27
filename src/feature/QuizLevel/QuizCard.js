@@ -10,6 +10,7 @@ import {
   setIsSubscribed,
   subscribeQuizLevel,
 } from "../../state/reducers/quiz/quizLevelSlice";
+import { getStudentDetails } from "../../state/reducers/auth/authSlice";
 const QuizCard = ({
   isLocked,
   title,
@@ -88,6 +89,7 @@ const QuizCard = ({
         icon: "success",
       });
       dispatch(setIsSubscribed());
+      dispatch(getStudentDetails(user.token));
       dispatch(fetchQuizLevels({ countryId, token: user.token }));
     }
   }, [countryId, dispatch, isSubscribe, user.token]);
@@ -129,7 +131,8 @@ const QuizCard = ({
               <img src={LockImg} alt="hello" className="h-full w-full " />
             </div>
           ) : null}
-        </CardContent>s
+        </CardContent>
+        s
       </Card>
     </Container>
   );
