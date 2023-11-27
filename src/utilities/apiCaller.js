@@ -16,7 +16,7 @@ export const publicGet = async (endpoint) => {
   const response = await axios.get(`${api}${endpoint}`, config);
   return response.data;
 };
-export const publicGetSingle = async (endpoint,id) => {
+export const publicGetSingle = async (endpoint, id) => {
   const response = await axios.get(`${api}${endpoint}`, config);
   return response.data;
 };
