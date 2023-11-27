@@ -15,7 +15,7 @@ import { Modal } from 'antd';
 const Profile = () => {
     const dispatch = useDispatch();
     const { user, isLoading, updatedStudent } = useSelector(state => state.user);
-    const { token } = useSelector(state => state.user.user);
+    const { token } = useSelector(state => state.user);
     const [avatar, setAvatar] = useState();
     const [avatarPreview, setAvatarPreview] = useState();
     const [name, setName] = useState("");
@@ -41,12 +41,15 @@ const Profile = () => {
         formData.append('name', name);
         formData.append('phone', phone);
         formData.append('address', address);
-        formData.append('profilePic', avatar);
+        formData.append('image', avatar);
         dispatch(updateStudentProfile({ token, data: formData }));
     };
     useEffect(() => {
         if (user) {
-            setAvatarPreview(user?.profilePic);
+            setAvatarPreview(user?.image);
+            setName(user?.name);
+            setPhone(user?.phone);
+            setAddress(user?.address);
         }
         if (updatedStudent) {
             showSuccessToast("Profile Successfully Updated");
@@ -76,9 +79,9 @@ const Profile = () => {
                             <div className="image-upload-section  flex flex-1 items-center justify-center gap-2 mt-8">
 
                                 {
-                                    user?.profilePic ? <img
+                                    user?.image ? <img
                                         alt=""
-                                        src={user.profilePic}
+                                        src={user.image}
                                         sx={{ width: 156, height: 156 }}
                                         className="h-52 w-52 border-2 border-teal-500 rounded-full p-2"
 
@@ -130,18 +133,20 @@ const Profile = () => {
                     </div>
                     <div className="mt-10">
                         <TextField
-
+required
                             id="outlined-required"
                             label="Name"
+                            value={name}
                             onChange={e => setName(e.target.value)}
                             className='w-full'
                         />
                     </div>
                     <div className="mt-10">
                         <TextField
-
+required
                             id="outlined-required"
                             label="Phone"
+                            value={phone}
                             onChange={e => setPhone(e.target.value)}
                             className='w-full'
                         />
@@ -149,9 +154,10 @@ const Profile = () => {
                     </div>
                     <div className="mt-10">
                         <TextField
-
+required
                             id="outlined-required"
                             label="Address"
+                            value={address}
                             onChange={e => setAddress(e.target.value)}
                             className='w-full'
                         />

@@ -84,6 +84,7 @@ const authSlice = createSlice({
       state.updatedStudent = true;
       state.user = { token: previousUser.token, ...action.payload };
       state.errorMessage = "";
+      console.log("action",action.payload);
     });
     builder.addCase(updateStudentProfile.rejected, (state, action) => {
       state.isLoading = false;
