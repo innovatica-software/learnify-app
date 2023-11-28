@@ -1,22 +1,33 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Container,
-} from "@mui/material";
+import React, { useEffect } from "react";
+import { Card, CardContent, Typography, Container } from "@mui/material";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import './Quiz.css';
-import LockImg from '../../assets/lock.png'
-const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
+import "./Quiz.css";
+import LockImg from "../../assets/lock.png";
+import {
+  fetchQuizLevels,
+  setIsSubscribed,
+  subscribeQuizLevel,
+} from "../../state/reducers/quiz/quizLevelSlice";
+import { getStudentDetails } from "../../state/reducers/auth/authSlice";
+const QuizCard = ({
+  isLocked,
+  title,
+  quizId,
+  cost,
+  isPurchase,
+  index,
+  countryId,
+}) => {
   const { user } = useSelector((state) => state.user);
+  const { isSubscribe } = useSelector((state) => state.quizLevels);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handlePurchaseLevel = async () => {
     Swal.fire({
       title: "Unlock Quiz Level",
-      text: "Are you sure you want to unlock this quiz level?",
+      text: `To unlock this quiz level, you need ${cost} coins. Are you sure you want to proceed? Once unlocked, you can access and attempt this level.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -24,18 +35,19 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
       confirmButtonText: "Yes, Unlock it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Quiz Unlocked!",
-          text: "You have successfully unlocked the quiz.",
-          icon: "success",
-        });
+        const data = {
+          quizId,
+          point: cost,
+        };
+        dispatch(subscribeQuizLevel({ token: user.token, data }));
       }
     });
   };
   const handleQuizClick = () => {
     if (!isLocked) {
       Swal.fire({
-        title: "Confirm quiz attempt?",
+        title: "Confirm Quiz Attempt",
+        text: "Are you sure you want to attempt this quiz?",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -50,17 +62,17 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
       console.log(user.coin);
       if (!isPurchase) {
         Swal.fire({
-          title: "Warning!",
-          text: "You must unlock the previous level first.",
+          title: "Unlock Previous Level",
+          text: "To proceed, you need to unlock the previous level first.",
           icon: "warning",
-          confirmButtonText: "Ok",
+          confirmButtonText: "OK",
         });
       } else if (user.coin < cost) {
         Swal.fire({
-          title: "Warning!",
-          text: "You have not enough coin.",
+          title: "Insufficient Coins",
+          text: `You need ${cost - user.coin} more coins to unlock this quiz.`,
           icon: "warning",
-          confirmButtonText: "Ok",
+          confirmButtonText: "OK",
         });
       } else {
         handlePurchaseLevel();
@@ -69,6 +81,18 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
     }
   };
 
+  useEffect(() => {
+    if (isSubscribe) {
+      Swal.fire({
+        title: "Quiz Unlocked",
+        text: "Congratulations! You have successfully unlocked the quiz.",
+        icon: "success",
+      });
+      dispatch(setIsSubscribed());
+      dispatch(getStudentDetails(user.token));
+      dispatch(fetchQuizLevels({ countryId, token: user.token }));
+    }
+  }, [countryId, dispatch, isSubscribe, user.token]);
   return (
     <Container
       maxWidth="xs"
@@ -78,25 +102,37 @@ const QuizCard = ({ isLocked, title, quizId, cost, isPurchase, index }) => {
         alignItems: "center",
         marginTop: "20px",
       }}
-
     >
-      <Card className='quiz-card-section'>
-        <CardContent style={{ textAlign: "center" }} onClick={handleQuizClick} >
-          {
-            isLocked ? <Typography variant="h5" component="div" style={{ marginTop: 20, marginBottom: 10 }}>
-
-            </Typography> : <Typography variant="h5" component="div" style={{ marginTop: 20, marginBottom: 10, color: 'white', fontSize: 90, fontWeight: 'bold' }}>
+      <Card className="quiz-card-section">
+        <CardContent style={{ textAlign: "center" }} onClick={handleQuizClick}>
+          {isLocked ? (
+            <Typography
+              variant="h5"
+              component="div"
+              style={{ marginTop: 20, marginBottom: 10 }}
+            ></Typography>
+          ) : (
+            <Typography
+              variant="h5"
+              component="div"
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                color: "white",
+                fontSize: 90,
+                fontWeight: "bold",
+              }}
+            >
               {index + 1}
             </Typography>
-          }
+          )}
           {isLocked ? (
             <div className="w-2/4 mx-auto ">
               <img src={LockImg} alt="hello" className="h-full w-full " />
             </div>
-          ) :
-            null
-          }
+          ) : null}
         </CardContent>
+        s
       </Card>
     </Container>
   );

@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { privatePutFile, publicPost } from "../../../utilities/apiCaller";
+import {
+  privateGet,
+  privatePutFile,
+  publicPost,
+} from "../../../utilities/apiCaller";
 
 export const createUserLogin = createAsyncThunk(
   "user/login",
@@ -27,6 +31,19 @@ export const updateStudentProfile = createAsyncThunk(
     }
   }
 );
+
+export const getStudentDetails = createAsyncThunk(
+  "student/getStudentDetails",
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await privateGet("/auth/student/details", token);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -35,7 +52,7 @@ const authSlice = createSlice({
     user: {},
     error: false,
     errorMessage: "",
-    updatedStudent: false
+    updatedStudent: false,
   },
   reducers: {
     login: (state, action) => {
@@ -52,7 +69,7 @@ const authSlice = createSlice({
     errorClean: (state) => {
       state.error = false;
       state.errorMessage = "";
-      state.updatedStudent = false
+      state.updatedStudent = false;
     },
   },
   extraReducers: (builder) => {
@@ -66,14 +83,14 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
       state.errorMessage = "";
-      state.token=action.payload.token
+      state.token = action.payload.token;
     });
     builder.addCase(createUserLogin.rejected, (state, action) => {
       state.isLoading = false;
       state.error = true;
       state.errorMessage = action.payload.data.message;
     });
-    builder.addCase(updateStudentProfile.pending, state => {
+    builder.addCase(updateStudentProfile.pending, (state) => {
       state.isLoading = true;
       state.error = false;
     });
@@ -84,13 +101,26 @@ const authSlice = createSlice({
       state.updatedStudent = true;
       state.user = { token: previousUser.token, ...action.payload };
       state.errorMessage = "";
-      console.log("action",action.payload);
     });
-    builder.addCase(updateStudentProfile.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = true;
-      // state.errorMessage = action.payload.data.message;
-    });
+    builder
+      .addCase(updateStudentProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = true;
+        // state.errorMessage = action.payload.data.message;
+      })
+      .addCase(getStudentDetails.pending, (state) => {
+        state.isLoading = true;
+        state.errorMessage = null;
+      })
+      .addCase(getStudentDetails.fulfilled, (state, action) => {
+        const { user: previousUser } = state;
+        state.isLoading = false;
+        state.user = { token: previousUser.token, ...action.payload };
+      })
+      .addCase(getStudentDetails.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload.data.message;
+      });
   },
 });
 
