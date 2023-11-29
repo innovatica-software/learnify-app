@@ -11,6 +11,7 @@ import {
   subscribeQuizLevel,
 } from "../../state/reducers/quiz/quizLevelSlice";
 import { getStudentDetails } from "../../state/reducers/auth/authSlice";
+import Rating from '@mui/material/Rating';
 const QuizCard = ({
   isLocked,
   title,
@@ -93,6 +94,13 @@ const QuizCard = ({
       dispatch(fetchQuizLevels({ countryId, token: user.token }));
     }
   }, [countryId, dispatch, isSubscribe, user.token]);
+  let ratings=5;
+  const options = {
+    size: "large",
+     value: ratings,
+    readOnly: true,
+    precision: 0.5,
+};
   return (
     <Container
       maxWidth="xs"
@@ -105,6 +113,10 @@ const QuizCard = ({
     >
       <Card className="quiz-card-section">
         <CardContent style={{ textAlign: "center" }} onClick={handleQuizClick}>
+        
+          <Rating {...options} size="medium" className="ratings-icons" />
+         
+          
           {isLocked ? (
             <Typography
               variant="h5"
@@ -127,12 +139,12 @@ const QuizCard = ({
             </Typography>
           )}
           {isLocked ? (
-            <div className="w-2/4 mx-auto ">
-              <img src={LockImg} alt="hello" className="h-full w-full " />
+            <div className="w-2/4 mx-auto">
+              <img src={LockImg} alt="hello" className="h-36 w-full" />
             </div>
           ) : null}
         </CardContent>
-        s
+        
       </Card>
     </Container>
   );
