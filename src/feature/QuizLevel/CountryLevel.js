@@ -3,7 +3,10 @@ import { Grid, Container } from "@mui/material";
 import QuizCard from "./QuizCard";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuizLevels } from "../../state/reducers/quiz/quizLevelSlice";
+import {
+  fetchFreeQuizLevels,
+  fetchQuizLevels,
+} from "../../state/reducers/quiz/quizLevelSlice";
 import { CircularProgress } from "@mui/material";
 import NoQuizLevelsMessage from "./NoQuizLevelsMessage ";
 
@@ -13,7 +16,11 @@ const CountryLevel = () => {
   const { isLoading, levels } = useSelector((state) => state.quizLevels);
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
-    dispatch(fetchQuizLevels({ countryId, token: user.token }));
+    if (!user.token) {
+      dispatch(fetchFreeQuizLevels({ countryId }));
+    } else {
+      dispatch(fetchQuizLevels({ countryId, token: user.token }));
+    }
   }, [countryId, dispatch, user.token]);
   const isPurchase = (currentIndex) => {
     if (
