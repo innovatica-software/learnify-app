@@ -11,7 +11,7 @@ import {
   subscribeQuizLevel,
 } from "../../state/reducers/quiz/quizLevelSlice";
 import { getStudentDetails } from "../../state/reducers/auth/authSlice";
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating";
 const QuizCard = ({
   isLocked,
   title,
@@ -20,6 +20,7 @@ const QuizCard = ({
   isPurchase,
   index,
   countryId,
+  isAttempted,
 }) => {
   const { user } = useSelector((state) => state.user);
   const { isSubscribe } = useSelector((state) => state.quizLevels);
@@ -94,13 +95,13 @@ const QuizCard = ({
       dispatch(fetchQuizLevels({ countryId, token: user.token }));
     }
   }, [countryId, dispatch, isSubscribe, user.token]);
-  let ratings=5;
+  let ratings = 3;
   const options = {
     size: "large",
-     value: ratings,
+    value: ratings,
     readOnly: true,
     precision: 0.5,
-};
+  };
   return (
     <Container
       maxWidth="xs"
@@ -112,11 +113,26 @@ const QuizCard = ({
       }}
     >
       <Card className="quiz-card-section">
-        <CardContent style={{ textAlign: "center" }} onClick={handleQuizClick}>
-        
-          <Rating {...options} size="medium" className="ratings-icons" />
-         
-          
+        <CardContent
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+          onClick={handleQuizClick}
+        >
+          {isAttempted && (
+            <Rating
+              {...options}
+              size="medium"
+              className="ratings-icons"
+              max={3}
+            />
+          )}
+
           {isLocked ? (
             <Typography
               variant="h5"
@@ -128,8 +144,6 @@ const QuizCard = ({
               variant="h5"
               component="div"
               style={{
-                marginTop: 20,
-                marginBottom: 10,
                 color: "white",
                 fontSize: 90,
                 fontWeight: "bold",
@@ -144,7 +158,6 @@ const QuizCard = ({
             </div>
           ) : null}
         </CardContent>
-        
       </Card>
     </Container>
   );

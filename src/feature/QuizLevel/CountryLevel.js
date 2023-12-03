@@ -54,6 +54,7 @@ const CountryLevel = () => {
                 cost={level.point}
                 countryId={countryId}
                 isPurchase={isPurchase(index)}
+                isAttempted={level.isAttempted}
                 index={index}
               />
             </Grid>
