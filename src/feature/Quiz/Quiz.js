@@ -8,8 +8,13 @@ import { Typography } from "@mui/material";
 import { theme } from "../../Theme/AppTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuizData } from "../../state/reducers/quiz/quizSlice";
+import {
+  fetchQuizData,
+  setSubmitQuizState,
+  submitQuizAnswers,
+} from "../../state/reducers/quiz/quizSlice";
 import Loader from "../../components/Loader/Loader";
+import { getStudentDetails } from "../../state/reducers/auth/authSlice";
 const BasicGrid = styled.div`
   display: grid;
   gap: 1rem;
@@ -20,9 +25,16 @@ const Quiz = () => {
   const { levelId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  const { isLoading, questions } = useSelector((state) => state.quizLevel);
-
+  const { isAuthenticated, user, token } = useSelector((state) => state.user);
+  const { isLoading, questions, isSubmitQuiz, errorMessage } = useSelector(
+    (state) => state.quizLevel
+  );
+  useEffect(() => {
+    if (isSubmitQuiz) {
+      dispatch(getStudentDetails(token));
+      dispatch(setSubmitQuizState());
+    }
+  }, [dispatch, isSubmitQuiz, token]);
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -122,7 +134,7 @@ const Quiz = () => {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(120);
   const [timeUp, setTimeUp] = useState(false);
 
   useEffect(() => {
@@ -165,9 +177,18 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
-    const score = calculateScore();
+    const { score, average } = calculateScore();
     setQuizScore(score);
     setShowScore(true);
+    if (average >= 80) {
+      const data = {
+        quizId: levelId,
+        point: score,
+        attemptResults: selectedOptions,
+      };
+      dispatch(submitQuizAnswers({ data, token }));
+    }
+    console.log(score, average);
     console.log("Submitted options:", selectedOptions);
   };
 
@@ -194,7 +215,7 @@ const Quiz = () => {
       }
     });
     setAvg((score / questions.length) * 100);
-    return score;
+    return { score, average: (score / questions.length) * 100 };
   };
 
   const noQuestionsAvailable =
@@ -251,8 +272,18 @@ const Quiz = () => {
         >
           {noQuestionsAvailable ? (
             <div style={styles.message}>
-              <p style={styles.text}>No questions available at the moment.</p>
-              <p style={styles.text}>Please check back later.</p>
+              {errorMessage ? (
+                <>
+                  <p style={styles.text}>{errorMessage}</p>
+                </>
+              ) : (
+                <>
+                  <p style={styles.text}>
+                    No questions available at the moment.
+                  </p>
+                  <p style={styles.text}>Please check back later.</p>
+                </>
+              )}
             </div>
           ) : (
             <div>
