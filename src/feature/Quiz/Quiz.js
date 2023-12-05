@@ -25,6 +25,7 @@ const Quiz = () => {
   const { levelId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const msg = new SpeechSynthesisUtterance();
   const { isAuthenticated, user, token } = useSelector((state) => state.user);
   const { isLoading, questions, isSubmitQuiz, errorMessage } = useSelector(
     (state) => state.quizLevel
@@ -44,7 +45,7 @@ const Quiz = () => {
   }, [dispatch, isAuthenticated, levelId, navigate, user.token]);
   const [questionVoiced, setQuestionVoiced] = useState(false);
   const voiceQuestion = (text) => {
-    const msg = new SpeechSynthesisUtterance();
+    window.speechSynthesis.cancel();
     msg.text = text;
     window.speechSynthesis.speak(msg);
   };
@@ -177,6 +178,7 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
+    window.speechSynthesis.cancel();
     const { score, average } = calculateScore();
     setQuizScore(score);
     setShowScore(true);
