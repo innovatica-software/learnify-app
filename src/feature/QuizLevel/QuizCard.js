@@ -109,7 +109,8 @@ const QuizCard = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "20px",
+        marginTop: "40px",
+        marginBottom:"80px"
       }}
     >
       <Card className="quiz-card-section">

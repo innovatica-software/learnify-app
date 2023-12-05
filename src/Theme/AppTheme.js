@@ -17,4 +17,6 @@ export const theme = {
   boxShadow: "0 8px 30px rgb(0 0 0 / 15%);",
   padding: "8pt calc(16pt + 0.25rem)",
   buttonColor: "#13B8A7",
+  countryColor:"#62D7CB",
+  textColor:"#fffac2"
 };
