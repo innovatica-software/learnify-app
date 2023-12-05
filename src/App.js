@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Register from "./feature/auth/Register";
 import Login from "./feature/auth/Login";
-import Country from "./feature/Country/Country";
+// import Country from "./feature/Country/Country";
 import Discussion from "./feature/Discussion/Discussion";
 import Resources from "./feature/Resources/Resources";
 import Translate from "./feature/Translate/Translate";
@@ -21,6 +21,8 @@ import CountryLevel from "./feature/QuizLevel/CountryLevel";
 import DiscussionDetails from "./feature/Discussion/DiscussionDetails";
 import Profile from "./feature/profile/Profile";
 import NotFound from "./feature/NotFound/NotFound";
+import Main from "./feature/main/Main";
+
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -34,10 +36,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <MainApp className="app">
+        
         <Router>
           <Layout>
             <Routes>
-              <Route path="/" element={<Country />} />
+              {/* <Route path="/" element={<Country />} /> */}
+              <Route exact path="/" element={<Main />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/discussion" element={<Discussion />} />
@@ -56,6 +60,7 @@ function App() {
             </Routes>
           </Layout>
         </Router>
+   
       </MainApp>
     </ThemeProvider>
   );
