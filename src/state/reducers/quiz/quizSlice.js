@@ -1,11 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { privateGet, privatePost } from "../../../utilities/apiCaller";
+import { privateGet, privatePost, publicGet } from "../../../utilities/apiCaller";
 
 export const fetchQuizData = createAsyncThunk(
   "quiz/fetchQuizData",
   async ({ token, levelId }, { rejectWithValue }) => {
     try {
       const response = await privateGet(`/quiz-levels/${levelId}`, token);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response);
+    }
+  }
+);
+export const fetchFreeQuizData = createAsyncThunk(
+  "quiz/fetchFreeQuizData",
+  async ({ levelId }, { rejectWithValue }) => {
+    try {
+      const response = await publicGet(`/quiz-levels/free/${levelId}`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response);
@@ -51,6 +62,19 @@ const quizSlice = createSlice({
         state.questions = action.payload.questions;
       })
       .addCase(fetchQuizData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload.data.message;
+      })
+      .addCase(fetchFreeQuizData.pending, (state) => {
+        state.isLoading = true;
+        state.errorMessage = null;
+      })
+      .addCase(fetchFreeQuizData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.quiz = action.payload;
+        state.questions = action.payload.questions;
+      })
+      .addCase(fetchFreeQuizData.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.payload.data.message;
       })
