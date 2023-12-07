@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { privateGet, privatePost, publicGet } from "../../../utilities/apiCaller";
+import {
+  privateGet,
+  privatePost,
+  publicGet,
+} from "../../../utilities/apiCaller";
 
 export const fetchQuizLevels = createAsyncThunk(
   "quizLevel/fetchQuizLevels",
@@ -61,6 +65,7 @@ const quizLevelSlice = createSlice({
       })
       .addCase(fetchQuizLevels.rejected, (state, action) => {
         state.isLoading = false;
+        state.levels = [];
         state.errorMessage = action.payload.data.message;
       })
       .addCase(fetchFreeQuizLevels.pending, (state) => {
@@ -73,13 +78,14 @@ const quizLevelSlice = createSlice({
       })
       .addCase(fetchFreeQuizLevels.rejected, (state, action) => {
         state.isLoading = false;
+        state.levels = [];
         state.errorMessage = action.payload.data.message;
       })
       .addCase(subscribeQuizLevel.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(subscribeQuizLevel.fulfilled, (state, action) => {
+      .addCase(subscribeQuizLevel.fulfilled, (state) => {
         state.isLoading = false;
         state.isSubscribe = true;
       })
