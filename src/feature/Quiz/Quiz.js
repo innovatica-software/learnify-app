@@ -9,12 +9,15 @@ import { theme } from "../../Theme/AppTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchFreeQuizData,
   fetchQuizData,
   setSubmitQuizState,
   submitQuizAnswers,
 } from "../../state/reducers/quiz/quizSlice";
 import Loader from "../../components/Loader/Loader";
 import { getStudentDetails } from "../../state/reducers/auth/authSlice";
+import "./Quiz.css";
+
 const BasicGrid = styled.div`
   display: grid;
   gap: 1rem;
@@ -38,7 +41,7 @@ const Quiz = () => {
   }, [dispatch, isSubmitQuiz, token]);
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login");
+      dispatch(fetchFreeQuizData({ levelId }));
     } else {
       dispatch(fetchQuizData({ token: user.token, levelId }));
     }
@@ -135,7 +138,7 @@ const Quiz = () => {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(300);
   const [timeUp, setTimeUp] = useState(false);
 
   useEffect(() => {
@@ -188,10 +191,10 @@ const Quiz = () => {
         point: score,
         attemptResults: selectedOptions,
       };
-      dispatch(submitQuizAnswers({ data, token }));
+      if (isAuthenticated) {
+        dispatch(submitQuizAnswers({ data, token }));
+      }
     }
-    console.log(score, average);
-    console.log("Submitted options:", selectedOptions);
   };
 
   const handleOptionSelect = (option) => {
@@ -263,7 +266,10 @@ const Quiz = () => {
     },
   };
   return (
-    <Container maxWidth="md" style={{ marginTop: "20px" }}>
+    <Container
+      maxWidth="md"
+      style={{ marginBottom: "20px", marginTop: "20px" }}
+    >
       {isLoading ? (
         <div className="flex flex-1 justify-center items-center mt-16">
           <Loader></Loader>
@@ -310,10 +316,18 @@ const Quiz = () => {
                   </div>
                 </div>
                 <div className="question">
-                  <h2 className="question-text" style={{ color: "#000000" }}>
-                    {" "}
+                  <h2 className="question-text">
                     {questions[currentQuestion].title}
                   </h2>
+                  {questions[currentQuestion].image && (
+                    <div className="image-container">
+                      <img
+                        src={questions[currentQuestion].image}
+                        alt="question pic"
+                        className="centered-image"
+                      />
+                    </div>
+                  )}
                 </div>
               </>
               <BasicGrid className="answers-row middle">
