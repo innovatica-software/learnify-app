@@ -20,8 +20,9 @@ const Country = () => {
     <div className="country-section">
       <div className="lg:flex justify-center items-center gap-16 w-3/4 mx-auto md:pt-20">
         <div className="w-full ">
-          <h1 className="text-xl lg:text-4xl xl:text-5xl text-start">
-            Which language do you want to try ?
+          <h1 className="text-xl lg:text-1xl xl:text-2xl text-start">
+            Challenge Your Knowledge: Dive into Our Quizzes tailored for Every
+            Country!
           </h1>
 
           {isLoading ? (
