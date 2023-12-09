@@ -62,7 +62,10 @@ const Discussion = () => {
   };
 
   return (
-    <div className="w-4/4 mx-auto mt-8 md:mt-8 ">
+    <div className="w-4/4 mx-auto mt-8 md:mt-8 my-4">
+      <h1 className="text-xl lg:text-3xl xl:text-4xl text-center">
+        Where ideas Unite:Engage, Discuss, Inspire.
+      </h1>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create Discussion Forum</DialogTitle>
         <DialogContent dividers>

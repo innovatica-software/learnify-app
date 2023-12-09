@@ -61,7 +61,6 @@ const QuizCard = ({
         }
       });
     } else {
-      console.log(user.coin);
       if (!isPurchase) {
         Swal.fire({
           title: "Unlock Previous Level",
@@ -146,11 +145,11 @@ const QuizCard = ({
               component="div"
               style={{
                 color: "white",
-                fontSize: 90,
+                fontSize: 30,
                 fontWeight: "bold",
               }}
             >
-              {index + 1}
+             Level-{index + 1}
             </Typography>
           )}
           {isLocked ? (
