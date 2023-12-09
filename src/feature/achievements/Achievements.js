@@ -13,13 +13,13 @@ import { theme } from "../../Theme/AppTheme";
 const Achievements = () => {
   return (
     <div className=" pt-24 " style={{ backgroundColor: `${theme.countryColor}` }}>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-3/4 mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-3/4 mx-auto">
         <div className="flex">
           <div>
             <img src={feOne} alt="" className="border rounded-full"/>
           </div>
           <div>
-            <p className="md:mt-6 ml-2  " >Online Tutoring</p>
+            <p className="mt-6 ml-2  text-xs md:text-xl" >Online Tutoring</p>
           </div>
         </div>
         <div className="flex">
@@ -27,7 +27,7 @@ const Achievements = () => {
             <img src={feTwo} alt="" className="border rounded-full"/>
           </div>
           <div>
-            <p className="md:mt-6 ml-2 ">50+ Courses</p>
+            <p className="mt-6 ml-2  text-xs md:text-xl">50+ Courses</p>
           </div>
         </div>
 
@@ -36,7 +36,7 @@ const Achievements = () => {
             <img src={feThree} alt="" className="border rounded-full"/>
           </div>
           <div>
-            <p className="md:mt-6 ml-2 ">Lifetime Access</p>
+            <p className="mt-6 ml-2  text-xs md:text-xl">Lifetime Access</p>
           </div>
         </div>
 
@@ -45,7 +45,7 @@ const Achievements = () => {
             <img src={feFour} alt="" className="border rounded-full"/>
           </div>
           <div>
-            <p className="md:mt-6 ml-2 ">Activate Learning</p>
+            <p className="mt-6 ml-2  text-xs md:text-xl ">Activate Learning</p>
           </div>
         </div>
       </div>

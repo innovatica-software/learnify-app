@@ -114,7 +114,8 @@ function ResponsiveAppBar() {
                   to={page.link}
                   underline="none"
                 >
-                  <Typography textAlign="center">{page.name}</Typography>
+                  <Typography textAlign="center" component={Link}
+            to="/">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -123,7 +124,8 @@ function ResponsiveAppBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
