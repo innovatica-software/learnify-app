@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../state/reducers/auth/authSlice";
 import { theme } from "../../Theme/AppTheme";
 const pages = [
+  
+  { name: "Country ", link: "/country/list" },
   { name: "Translate", link: "/translate" },
   { name: "Resources", link: "/resources" },
   { name: "Discussion", link: "/discussion" },

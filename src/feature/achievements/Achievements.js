@@ -16,7 +16,7 @@ const Achievements = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-3/4 mx-auto">
         <div className="flex">
           <div>
-            <img src={feOne} alt="" className="border rounded-full"/>
+            <img src={feOne} alt="" className="border rounded-full" />
           </div>
           <div>
             <p className="mt-6 ml-2  text-xs md:text-xl" >Online Tutoring</p>
@@ -24,7 +24,7 @@ const Achievements = () => {
         </div>
         <div className="flex">
           <div>
-            <img src={feTwo} alt="" className="border rounded-full"/>
+            <img src={feTwo} alt="" className="border rounded-full" />
           </div>
           <div>
             <p className="mt-6 ml-2  text-xs md:text-xl">50+ Courses</p>
@@ -33,7 +33,7 @@ const Achievements = () => {
 
         <div className="flex">
           <div>
-            <img src={feThree} alt="" className="border rounded-full"/>
+            <img src={feThree} alt="" className="border rounded-full" />
           </div>
           <div>
             <p className="mt-6 ml-2  text-xs md:text-xl">Lifetime Access</p>
@@ -42,7 +42,7 @@ const Achievements = () => {
 
         <div className="flex">
           <div>
-            <img src={feFour} alt="" className="border rounded-full"/>
+            <img src={feFour} alt="" className="border rounded-full" />
           </div>
           <div>
             <p className="mt-6 ml-2  text-xs md:text-xl ">Activate Learning</p>
@@ -53,16 +53,16 @@ const Achievements = () => {
       {/* find section */}
       <div>
         <div>
-          <h2 className=" text-center text-xl md:text-4xl font-bold  mt-20" style={{color:`${theme.textColor}` }}>
+          <h2 className=" text-center text-xl md:text-4xl font-bold  mt-20" style={{ color: `${theme.textColor}` }}>
             Find Out Why You Should Learn With Learnify
           </h2>
         </div>
-        <div className=" md:flex w-3/4 gap-8 mx-auto ">
+        <div className=" md:flex w-3/4 md:w-2/4 gap-8 mx-auto ">
           <div className="img-1">
             <img src={gifOne} alt="" className="h-96 w-[96]  mt-16  " />
           </div>
           <div className=" pt-28  text-left">
-            <p className="  text-xl font-bold" style={{color:`${theme.textColor}` }}>
+            <p className="  text-xl font-bold" style={{ color: `${theme.textColor}` }}>
               AN INTERACTIVE COMMUNITY
             </p>
             <p className="text-start mt-8">
@@ -79,9 +79,9 @@ const Achievements = () => {
         </div>
 
         <div>
-          <div className="md:flex w-3/4 gap-8 mx-auto ">
+          <div className="md:flex w-3/4 md:w-2/4 gap-8 mx-auto ">
             <div className=" pt-28 ">
-              <p className=" text-xl font-bold" style={{color:`${theme.textColor}` }}>
+              <p className=" text-xl font-bold" style={{ color: `${theme.textColor}` }}>
                 VARITY OF LANGUAGES
               </p>
               <p className="text-start  mt-4">
@@ -95,18 +95,18 @@ const Achievements = () => {
             </div>
 
             <div>
-              <img src={gifTwo} alt="" className="h-96 w-[96] " />
+              <img src={gifTwo} alt="" className="h-96 w-[96] mx-auto" />
             </div>
           </div>
         </div>
 
         <div>
-          <div className="md:flex w-3/4 gap-8 mx-auto ">
+          <div className="md:flex w-3/4 md:w-2/4 gap-8 mx-auto ">
             <div>
               <img src={gifThree} alt="" className="h-96 w-[96]  mt-16" />
             </div>
             <div className=" pt-28  text-left ">
-              <p className=" text-center  text-xl font-bold" style={{color:`${theme.textColor}` }}>
+              <p className=" text-center  text-xl font-bold" style={{ color: `${theme.textColor}` }}>
                 ACCESSIBLE RESOURCES
               </p>
               <p className="text-start  mt-4">
@@ -123,9 +123,9 @@ const Achievements = () => {
         </div>
 
         <div>
-          <div className="md:flex w-3/4 gap-8 mx-auto ">
+          <div className="md:flex w-3/4 md:w-2/4 gap-8 mx-auto ">
             <div className="pt-28 ">
-              <p className=" text-xl font-bold" style={{color:`${theme.textColor}` }}>
+              <p className=" text-xl font-bold" style={{ color: `${theme.textColor}` }}>
                 PRACTICE AND REPETITION
               </p>
               <p className="text-start mt-4">
@@ -155,7 +155,7 @@ const Achievements = () => {
             </div>
           </div>
           <div>
-            <p className="text-2xl m-5 " style={{color:`${theme.textColor}` }}>
+            <p className="text-2xl m-5 " style={{ color: `${theme.textColor}` }}>
               {" "}
               <b>Learnify Videos</b>
             </p>
@@ -164,7 +164,7 @@ const Achievements = () => {
               truly intriguing and enchanting
             </p>
           </div>
-          <button className="mb-9 mt-9 ml-4 border-2 border-white rounded-md pl-8 pr-8 pb-4  pt-4 hover:bg-white hover:text-teal-500" style={{color:`${theme.textColor}` }}>
+          <button className="mb-9 mt-9 ml-4 border-2 border-white rounded-md pl-8 pr-8 pb-4  pt-4 hover:bg-white hover:text-teal-500" style={{ color: `${theme.textColor}` }}>
             <b>WATCH</b>
           </button>
         </div>
@@ -177,7 +177,7 @@ const Achievements = () => {
           </div>
           <div>
             {" "}
-            <p className="text-2xl m-5 " style={{color:`${theme.textColor}` }}>
+            <p className="text-2xl m-5 " style={{ color: `${theme.textColor}` }}>
               {" "}
               <b >Learnify Magazine</b>{" "}
             </p>
@@ -186,7 +186,7 @@ const Achievements = () => {
               a sneak peek into local cultures.
             </p>
           </div>
-          <button className="mb-9 mt-9 ml-4 border-2 border-white rounded-md pl-8 pr-8 pb-4  pt-4 hover:bg-white hover:text-teal-500" style={{color:`${theme.textColor}` }}>
+          <button className="mb-9 mt-9 ml-4 border-2 border-white rounded-md pl-8 pr-8 pb-4  pt-4 hover:bg-white hover:text-teal-500" style={{ color: `${theme.textColor}` }}>
             {" "}
             <b>LISTEN</b>
           </button>
