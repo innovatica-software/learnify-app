@@ -7,6 +7,7 @@ const Main = () => {
         <div>
             <Country></Country>
             <Achievements></Achievements>
+           
         </div>
     );
 };

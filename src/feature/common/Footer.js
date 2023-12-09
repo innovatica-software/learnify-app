@@ -4,7 +4,7 @@ import { theme } from "../../Theme/AppTheme";
 import './Footer.css'
 const Footer = () => {
   return (
-    <footer style={{ backgroundColor: `${theme.countryColor}` }} className="footer-section ">
+    <footer style={{ backgroundColor: `${theme.countryColor}` }} >
       <div className="container p-8 mx-auto">
         <div className="lg:flex">
           <div className="w-full -mx-6 lg:w-2/5">

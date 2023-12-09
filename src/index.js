@@ -5,11 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './state/store';
+import Kommunicate from "@kommunicate/kommunicate-chatbot-plugin";
 const root = ReactDOM.createRoot(document.getElementById('root'));
+Kommunicate.init("b41009aba8e59500cfdf3865264f232a", {
+  automaticChatOpenOnNavigation: true,
+  popupWidget: true
+});
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
+      
     </Provider>
   </React.StrictMode>
 );
