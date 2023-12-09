@@ -72,7 +72,7 @@ const Profile = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="mt-12  md:mt-20 w-3/4 md:w-3/4 2xl:w-2/4 mx-auto md:flex justify-center items-center gap-4 2xl:gap-8 ">
+    <div className="mt-12  md:mt-20 w-3/4 md:w-3/4 2xl:w-2/4 mx-auto  gap-4 2xl:gap-8  min-h-screen">
       <div className="md:w-3/4 flex flex-1 justify-center items-center mx-auto">
         {isLoading ? (
           <div className="flex flex-1 justify-center items-center mt-16">

@@ -22,6 +22,7 @@ import Profile from "./feature/profile/Profile";
 import NotFound from "./feature/NotFound/NotFound";
 import Main from "./feature/main/Main";
 import PremiumCard from "./feature/premium/PremiumCard";
+import CountryList from "./feature/Country/CountryList";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -39,7 +40,6 @@ function App() {
         <Router>
           <Layout>
             <Routes>
-            
               <Route exact path="/" element={<Main />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
@@ -56,6 +56,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/account" element={<PremiumCard />} />
               <Route path="/country" element={<CountryLevel />} />
+              <Route path="/country/list" element={<CountryList />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

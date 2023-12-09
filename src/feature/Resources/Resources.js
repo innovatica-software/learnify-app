@@ -13,7 +13,7 @@ const Resources = () => {
   return (
     <div style={{ marginBottom: "20px" }} className="my-4 min-h-screen">
       <h1 className="text-xl lg:text-3xl xl:text-4xl text-center my-5">
-        Discover a Wealth of Educational Materials ?
+        Discover a Wealth of Educational Materials.
       </h1>
       {isLoading ? (
         <div className="flex flex-1 justify-center items-center mt-16">
