@@ -11,7 +11,7 @@ const Resources = () => {
   }, [dispatch]);
   const { isLoading, resource } = useSelector((state) => state.resources);
   return (
-    <div style={{ marginBottom: "20px" }} className="my-4">
+    <div style={{ marginBottom: "20px" }} className="my-4 min-h-screen">
       <h1 className="text-xl lg:text-3xl xl:text-4xl text-center my-5">
         Discover a Wealth of Educational Materials ?
       </h1>

@@ -88,7 +88,7 @@ const Translate = () => {
     marginTop: "16px",
   };
   return (
-    <Container style={containerStyle}>
+    <Container style={containerStyle} className="min-h-screen">
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div className={classes.container}>

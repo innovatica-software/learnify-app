@@ -12,7 +12,7 @@ import podcastImg from "../../assets/podcast.jpg";
 import { theme } from "../../Theme/AppTheme";
 const Achievements = () => {
   return (
-    <div className="" style={{ backgroundColor: `${theme.countryColor}` }}>
+    <div className=" pt-24 " style={{ backgroundColor: `${theme.countryColor}` }}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-3/4 mx-auto">
         <div className="flex">
           <div>
@@ -148,7 +148,7 @@ const Achievements = () => {
       {/* videos section */}
 
       <div className="md:flex justify-between w-full md:w-3/4 lg:w-2/4 gap-4 mx-auto  mt-16">
-        <div className="bg-teal-600 border-2 border-teal-400 box-border shadow-teal-300 mb-8">
+        <div className="bg-teal-600 border-2 border-teal-400 box-border shadow-teal-300 ">
           <div>
             <div>
               <img src={videoImg} alt="" className="w-[517px] h-[250px]" />
@@ -169,7 +169,7 @@ const Achievements = () => {
           </button>
         </div>
 
-        <div className="bg-teal-600 border-2 border-teal-400 box-border mb-8">
+        <div className="bg-teal-600 border-2 border-teal-400 box-border ">
           <div>
             <div>
               <img src={podcastImg} alt="" className="w-[510px] h-[250px]" />

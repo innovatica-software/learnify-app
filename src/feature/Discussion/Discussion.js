@@ -62,7 +62,7 @@ const Discussion = () => {
   };
 
   return (
-    <div className="w-4/4 mx-auto mt-8 md:mt-8 my-4">
+    <div className="w-4/4 mx-auto mt-8 md:mt-8 my-4 min-h-screen">
       <h1 className="text-xl lg:text-3xl xl:text-4xl text-center">
         Where ideas Unite:Engage, Discuss, Inspire.
       </h1>
@@ -101,7 +101,7 @@ const Discussion = () => {
       {isAuthenticated ? (
         <div className="flex justify-between items-center">
           <div className="grid md:grid-cols-2 gap-4 md:w-3/4 mt-16 "></div>
-          <div className="w-1/4 pl-24 flex ">
+          <div className="w-2/4 md:w-2/4 lg:w-1/4 md:pl-24 flex ">
             <Button variant="contained" onClick={handleClickOpen}>
               Create Discussion
             </Button>
