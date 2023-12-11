@@ -44,6 +44,7 @@ export const getStudentDetails = createAsyncThunk(
   }
 );
 
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {

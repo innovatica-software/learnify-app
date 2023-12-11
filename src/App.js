@@ -23,6 +23,7 @@ import NotFound from "./feature/NotFound/NotFound";
 import Main from "./feature/main/Main";
 import PremiumCard from "./feature/premium/PremiumCard";
 import CountryList from "./feature/Country/CountryList";
+import Transactions from "./feature/transactions/Transactions";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -55,6 +56,7 @@ function App() {
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/account" element={<PremiumCard />} />
+              <Route path="/dashboard" element={<Transactions />} />
               <Route path="/country" element={<CountryLevel />} />
               <Route path="/country/list" element={<CountryList />} />
               <Route path="*" element={<NotFound />} />
