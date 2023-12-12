@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { privateGet, privatePost, publicGet } from "../../../utilities/apiCaller";
+import {
+  privateGet,
+  privatePost,
+  publicGet,
+} from "../../../utilities/apiCaller";
 
 export const fetchQuizData = createAsyncThunk(
   "quiz/fetchQuizData",
@@ -49,11 +53,17 @@ const quizSlice = createSlice({
     setSubmitQuizState: (state) => {
       state.isSubmitQuiz = false;
     },
+    cleanQuizState: (state) => {
+      state.quiz = {};
+      state.questions = [];
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchQuizData.pending, (state) => {
         state.isLoading = true;
+        state.quiz = {};
+        state.questions = [];
         state.errorMessage = null;
       })
       .addCase(fetchQuizData.fulfilled, (state, action) => {
@@ -63,10 +73,14 @@ const quizSlice = createSlice({
       })
       .addCase(fetchQuizData.rejected, (state, action) => {
         state.isLoading = false;
+        state.quiz = {};
+        state.questions = [];
         state.errorMessage = action.payload.data.message;
       })
       .addCase(fetchFreeQuizData.pending, (state) => {
         state.isLoading = true;
+        state.quiz = {};
+        state.questions = [];
         state.errorMessage = null;
       })
       .addCase(fetchFreeQuizData.fulfilled, (state, action) => {
@@ -76,14 +90,20 @@ const quizSlice = createSlice({
       })
       .addCase(fetchFreeQuizData.rejected, (state, action) => {
         state.isLoading = false;
+        state.quiz = {};
+        state.questions = [];
         state.errorMessage = action.payload.data.message;
       })
       .addCase(submitQuizAnswers.pending, (state) => {
         state.isLoading = true;
+        state.quiz = {};
+        state.questions = [];
         state.errorMessage = null;
       })
       .addCase(submitQuizAnswers.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.quiz = {};
+        state.questions = [];
         state.isSubmitQuiz = true;
       })
       .addCase(submitQuizAnswers.rejected, (state, action) => {
@@ -92,5 +112,5 @@ const quizSlice = createSlice({
       });
   },
 });
-export const { setSubmitQuizState } = quizSlice.actions;
+export const { setSubmitQuizState, cleanQuizState } = quizSlice.actions;
 export default quizSlice.reducer;

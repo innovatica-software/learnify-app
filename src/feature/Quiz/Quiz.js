@@ -9,6 +9,7 @@ import { theme } from "../../Theme/AppTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  cleanQuizState,
   fetchFreeQuizData,
   fetchQuizData,
   setSubmitQuizState,
@@ -28,11 +29,17 @@ const Quiz = () => {
   const { levelId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const msg = new SpeechSynthesisUtterance();
   const { isAuthenticated, user, token } = useSelector((state) => state.user);
   const { isLoading, questions, isSubmitQuiz, errorMessage } = useSelector(
     (state) => state.quizLevel
   );
+  useEffect(() => {
+    return () => {
+      dispatch(cleanQuizState())
+      window.speechSynthesis.cancel();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     if (isSubmitQuiz) {
       dispatch(getStudentDetails(token));
@@ -49,83 +56,9 @@ const Quiz = () => {
   const [questionVoiced, setQuestionVoiced] = useState(false);
   const voiceQuestion = (text) => {
     window.speechSynthesis.cancel();
-    msg.text = text;
+    const msg = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(msg);
   };
-  // const questions = [
-  //   {
-  //     title: "What is the capital of France?",
-  //     options: ["Paris", "Rome", "Madrid", "Berlin"],
-  //     answer: [0],
-  //   },
-  //   {
-  //     title: "Who painted the Mona Lisa?",
-  //     options: [
-  //       "Vincent van Gogh",
-  //       "Leonardo da Vinci",
-  //       "Pablo Picasso",
-  //       "Michelangelo",
-  //     ],
-  //     answer: [1],
-  //   },
-  //   {
-  //     title: "Which planet is known as the Red Planet?",
-  //     options: ["Mars", "Jupiter", "Venus", "Mercury"],
-  //     answer: [0],
-  //   },
-  //   {
-  //     title: "Who wrote 'To Kill a Mockingbird'?",
-  //     options: [
-  //       "Harper Lee",
-  //       "Charles Dickens",
-  //       "Mark Twain",
-  //       "F. Scott Fitzgerald",
-  //     ],
-  //     answer: [0],
-  //   },
-  //   // {
-  //   //   title: "What is the largest mammal in the world?",
-  //   //   options: ["Elephant", "Giraffe", "Blue Whale", "Hippopotamus"],
-  //   //   answer: [2],
-  //   // },
-  //   // {
-  //   //   title: "What year did World War II end?",
-  //   //   options: ["1943", "1945", "1950", "1939"],
-  //   //   answer: [1],
-  //   // },
-  //   // {
-  //   //   title: "Which country is known as the Land of the Rising Sun?",
-  //   //   options: ["China", "India", "Japan", "South Korea"],
-  //   //   answer: [2],
-  //   // },
-  //   // {
-  //   //   title: "What is the chemical symbol for gold?",
-  //   //   options: ["Go", "Ag", "Au", "Gl"],
-  //   //   answer: [2],
-  //   // },
-  //   // {
-  //   //   title: "Who developed the theory of relativity?",
-  //   //   options: [
-  //   //     "Isaac Newton",
-  //   //     "Albert Einstein",
-  //   //     "Stephen Hawking",
-  //   //     "Galileo Galilei",
-  //   //   ],
-  //   //   answer: [1],
-  //   // },
-  //   // {
-  //   //   title:
-  //   //     "Which famous scientist was awarded the Nobel Prize for discovering the structure of DNA?",
-  //   //   options: [
-  //   //     "Marie Curie",
-  //   //     "Francis Crick",
-  //   //     "Alexander Fleming",
-  //   //     "James Watson",
-  //   //   ],
-  //   //   answer: [1],
-  //   // },
-  // ];
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState(
     Array(questions.length).fill(-1)
@@ -140,6 +73,19 @@ const Quiz = () => {
   };
   const [timer, setTimer] = useState(300);
   const [timeUp, setTimeUp] = useState(false);
+
+  useEffect(() => {
+    if (!questionVoiced && questions.length > 0) {
+      voiceQuestion(questions[currentQuestion].title);
+      setQuestionVoiced(true);
+    }
+  }, [
+    currentQuestion,
+    isLoading,
+    questionVoiced,
+    questions,
+    setQuestionVoiced,
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -203,14 +149,6 @@ const Quiz = () => {
     setSelectedOptions(updatedOptions);
     voiceQuestion(questions[currentQuestion].options[option]);
   };
-
-  useEffect(() => {
-    if (!questionVoiced && questions.length > 0) {
-      voiceQuestion(questions[currentQuestion].title);
-      setQuestionVoiced(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQuestion, questionVoiced, setQuestionVoiced]);
 
   const calculateScore = () => {
     let score = 0;

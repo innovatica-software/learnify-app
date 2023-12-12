@@ -16,6 +16,11 @@ const CountryLevel = () => {
   const { isLoading, levels } = useSelector((state) => state.quizLevels);
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+  useEffect(() => {
     if (!user.token) {
       dispatch(fetchFreeQuizLevels({ countryId }));
     } else {
@@ -34,7 +39,7 @@ const CountryLevel = () => {
   };
   return (
     <Container>
-     <h1 className="text-xl lg:text-3xl xl:text-4xl text-center my-5">
+      <h1 className="text-xl lg:text-3xl xl:text-4xl text-center my-5">
         Level Up Your Learning: Navigate through Quiz challenges.
       </h1>
       {isLoading ? (
