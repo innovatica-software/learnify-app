@@ -56,7 +56,7 @@ function App() {
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/account" element={<PremiumCard />} />
-              <Route path="/dashboard" element={<Transactions />} />
+              <Route path="/transaction" element={<Transactions />} />
               <Route path="/country" element={<CountryLevel />} />
               <Route path="/country/list" element={<CountryList />} />
               <Route path="*" element={<NotFound />} />
