@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentTransactions } from '../../state/reducers/account/transactionsSlice';
 import Loader from '../../components/Loader/Loader';
-import { newFormatDate } from '../../utilities/helper';
-
+import { formatDate, } from '../../utilities/helper';
+import { BiSolidCoinStack } from "react-icons/bi";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const Transactions = () => {
     const dispatch = useDispatch();
@@ -26,25 +27,32 @@ const Transactions = () => {
                         {transactions.map((transaction) => (
                             <div
                                 key={transaction._id}
-                                className="px-2 md:px-12 py-2 md:py-8 transition-colors duration-300 transform border cursor-pointer rounded-xl "
+                                className="px-2 md:px-12 py-2 md:py-4 transition-colors duration-300 transform border cursor-pointer rounded-xl "
                             >
                                 <div >
-                                    <p className="text-sm font-semibold text-gray-400 text-start">Amount
-                                        <span className="text-red-500 font-semibold  text-start"> - {transaction.amount} Tk</span>
-                                    </p>
                                     <div className="flex justify-between gap-8 mt-2">
-                                        <p className="text-sm font-semibold text-gray-400 text-start">Coin
-                                            <span className="text-green-500 font-semibold  text-end"> + {transaction.coin}</span>
-                                        </p>
+                                        <p className=" text-sm font-semibold text-gray-400 text-start">Amount
 
+                                        </p>
+                                        <p className="flex  gap-2 text-red-500 font-semibold  text-end"> - {transaction.amount}
+                                            <span >   <FaBangladeshiTakaSign className=" text-red-500 font-semibold  text-end text-xl"></FaBangladeshiTakaSign></span>
+                                        </p>
+                                    </div>
+                                    <div className="flex justify-between gap-8 mt-4">
+                                        <p className=" text-sm font-semibold text-gray-400 text-start">Coin
+
+                                        </p>
+                                        <p className="flex gap-2 text-green-500 font-semibold  text-end"> + {transaction.coin}
+                                            <span >   <BiSolidCoinStack className=" text-orange-500 font-semibold  text-end text-xl"></BiSolidCoinStack></span>
+                                        </p>
                                     </div>
                                 </div>
                                 <h1
-                                    className="text-sm text-start font-semibold text-gray-400 capitalize mt-2"
+                                    className="text-sm text-start font-semibold text-gray-400 capitalize mt-4"
                                     style={{ display: "flex", justifyContent: "space-between" }}
                                 >
                                     <span className="text-gray-900">
-                                        {newFormatDate(transaction.createdAt)}
+                                        {formatDate(transaction.createdAt)}
                                     </span>
                                     <p>bkash</p>
                                 </h1>

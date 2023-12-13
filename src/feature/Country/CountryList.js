@@ -24,7 +24,9 @@ const CountryList = () => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const [textValue, setTextValue] = useState("");
+  const [name, setName] = useState("");
+  const [labelName, setlabelName] = useState("");
+  const [coin, setCoin] = useState("");
   const [agree, setAgree] = useState(false);
   console.log(agree);
   const [files, setFiles] = useState("");
@@ -41,8 +43,18 @@ const CountryList = () => {
     setOpen(false);
   };
 
-  const handleTextFieldChange = (e) => {
-    setTextValue(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    console.log("name",name);
+    
+  };
+  const handleLabelChange = (e) => {
+    setlabelName(e.target.value);
+    console.log("name",labelName);
+  };
+  const handleCoinChange = (e) => {
+    setCoin(e.target.value);
+    console.log("name",coin);
   };
 
   const handleSubmit = () => {
@@ -59,24 +71,32 @@ const CountryList = () => {
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Create New Quiz</DialogTitle>
             <DialogContent dividers>
-              <select name="Gender" className="w-full h-12 border rounded mt-4">
+              <select  className="w-full p-2 h-12 border rounded mt-4"  value={name} onChange={handleNameChange}>
                 {countries.map((country) => (
-                  <option>{country.name} </option>
+                  <option  >{country.name} </option>
                 ))}
               </select>
 
               <TextField
-                label="Label "
+                label="Label Name"
                 variant="outlined"
-                value={textValue}
-                onChange={handleTextFieldChange}
+                value={labelName}
+                onChange={handleLabelChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Coin"
+                variant="outlined"
+                value={coin}
+                onChange={handleCoinChange}
                 fullWidth
                 margin="normal"
               />
 
-              <input type="file" onChange={handleChange} className="mt-4" />
+              <input type="file" onChange={handleChange} className="mt-6" />
 
-              <div className="flex items-center justify-between mt-4">
+              <div className="flex items-center justify-between mt-6">
                 <div className="flex items-center">
                   <input
                     id="agree"
@@ -89,9 +109,9 @@ const CountryList = () => {
                   />
                   <label
                     htmlFor="accept-terms"
-                    className="ml-2 block text-sm text-gray-900"
+                    className="ml-2 block text-xl text-gray-900"
                   >
-                    is Premirum ?
+                    is Locked ?
                   </label>
                 </div>
               </div>

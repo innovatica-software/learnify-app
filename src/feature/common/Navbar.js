@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../state/reducers/auth/authSlice";
 import { theme } from "../../Theme/AppTheme";
 const pages = [
-  
+
   { name: "Country ", link: "/country/list" },
   { name: "Translate", link: "/translate" },
   { name: "Resources", link: "/resources" },
@@ -29,7 +29,7 @@ const pages = [
 const settings = [
   { name: "Profile", link: "/profile" },
   { name: "Account", link: "/account" },
-  { name: "Dashboard", link: "/dashboard" },
+  { name: "Transactions", link: "/transaction" },
   { name: "Logout" },
 ];
 
@@ -117,7 +117,7 @@ function ResponsiveAppBar() {
                   underline="none"
                 >
                   <Typography textAlign="center" component={Link}
-            to="/">{page.name}</Typography>
+                    to={page.link}>{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
