@@ -30,15 +30,19 @@ const Quiz = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated, user, token } = useSelector((state) => state.user);
-  const { isLoading, questions, isSubmitQuiz, errorMessage } = useSelector(
-    (state) => state.quizLevel
-  );
+  const {
+    isLoading,
+    questions,
+    isSubmitQuiz,
+    errorMessage,
+    quiz,
+  } = useSelector((state) => state.quizLevel);
   useEffect(() => {
     return () => {
-      dispatch(cleanQuizState())
+      dispatch(cleanQuizState());
       window.speechSynthesis.cancel();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (isSubmitQuiz) {
@@ -137,7 +141,7 @@ const Quiz = () => {
         point: score,
         attemptResults: selectedOptions,
       };
-      if (isAuthenticated) {
+      if (isAuthenticated && !quiz.isAttempted) {
         dispatch(submitQuizAnswers({ data, token }));
       }
     }
