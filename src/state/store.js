@@ -10,6 +10,7 @@ import discussionSlice from "./reducers/discussion/discussionDetailsSlice";
 import quizLevelSlice from "./reducers/quiz/quizLevelSlice";
 import quizSlice from "./reducers/quiz/quizSlice";
 import transactionsSlice from "./reducers/account/transactionsSlice";
+import countryLevelSlice from "./reducers/country/countryLevelQuizSlice";
 const persistConfig = {
   key: "authentication",
   storage,
@@ -24,7 +25,8 @@ const combinedReducer = {
   discussion: discussionSlice,
   quizLevels: quizLevelSlice,
   quizLevel: quizSlice,
-  transactions:transactionsSlice,
+  transactions: transactionsSlice,
+  countryQuiz: countryLevelSlice,
 };
 const middlewares = [];
 if (process.env.NODE_ENV === "development") {
