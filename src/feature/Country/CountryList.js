@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Country.css";
-import { FiPlusCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCountries } from "../../state/reducers/country/countrySlice";
 import Loader from "../../components/Loader/Loader";
@@ -13,6 +12,8 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { submitCountryLevel, submitQuizClean } from "../../state/reducers/country/countryLevelQuizSlice";
+import { showSuccessToast } from "../../components/Toast/Toast";
 const CountryList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,22 +21,27 @@ const CountryList = () => {
   }, [dispatch]);
   const { isLoading, countries } = useSelector((state) => state.countries);
   const { user } = useSelector((state) => state.user);
+  const { isLoading: submitLoading, success } = useSelector(
+    (state) => state.countryQuiz
+  );
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const [name, setName] = useState("");
+  const [countryId, setCountryId] = useState("");
   const [labelName, setlabelName] = useState("");
   const [coin, setCoin] = useState("");
   const [agree, setAgree] = useState(false);
-  console.log(agree);
   const [files, setFiles] = useState("");
+  const [questions, setQuestions] = useState([]);
 
   const handleChange = (e) => {
     const fileReader = new FileReader();
     fileReader.readAsText(e.target.files[0], "UTF-8");
     fileReader.onload = (e) => {
-      console.log("e.target.result", e.target.result);
+      const jsonData = JSON.parse(e.target.result);
+      setQuestions(jsonData);
       setFiles(e.target.result);
     };
   };
@@ -45,21 +51,34 @@ const CountryList = () => {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    console.log("name",name);
-    
+    setCountryId(e.target.value);
   };
   const handleLabelChange = (e) => {
     setlabelName(e.target.value);
-    console.log("name",labelName);
   };
   const handleCoinChange = (e) => {
     setCoin(e.target.value);
-    console.log("name",coin);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      countryId: countryId || countries[0].countryId,
+      levelName: labelName,
+      point: coin,
+      isUnlock: agree,
+      questionList: questions,
+    };
+    dispatch(submitCountryLevel({ token: user.token, data }));
+    console.log(data);
     handleClose();
   };
+  useEffect(() => {
+    if (success) {
+      showSuccessToast("Quiz Uploaded Successfully");
+      dispatch(submitQuizClean())
+    }
+  }, [dispatch, success]);
   return (
     <div className="country-section min-h-screen">
       <div className="lg:flex justify-center items-center gap-16 w-3/4 mx-auto pt-12 md:pt-20">
@@ -71,9 +90,15 @@ const CountryList = () => {
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Create New Quiz</DialogTitle>
             <DialogContent dividers>
-              <select  className="w-full p-2 h-12 border rounded mt-4"  value={name} onChange={handleNameChange}>
+              <select
+                className="w-full p-2 h-12 border rounded mt-4"
+                value={name}
+                onChange={handleNameChange}
+              >
                 {countries.map((country) => (
-                  <option  >{country.name} </option>
+                  <option key={country.countryId} value={country.countryId}>
+                    {country.language}{" "}
+                  </option>
                 ))}
               </select>
 
@@ -86,7 +111,7 @@ const CountryList = () => {
                 margin="normal"
               />
               <TextField
-                label="Coin"
+                label="Point"
                 variant="outlined"
                 value={coin}
                 onChange={handleCoinChange}
@@ -111,7 +136,7 @@ const CountryList = () => {
                     htmlFor="accept-terms"
                     className="ml-2 block text-xl text-gray-900"
                   >
-                    is Locked ?
+                    is Unlocked?
                   </label>
                 </div>
               </div>
@@ -140,7 +165,7 @@ const CountryList = () => {
             </div>
           ) : null}
 
-          {isLoading ? (
+          {isLoading || submitLoading ? (
             <div className="w-1/4 mx-auto mt-12">
               <Loader></Loader>
             </div>
